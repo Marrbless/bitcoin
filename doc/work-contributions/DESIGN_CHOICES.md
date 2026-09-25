@@ -1,5 +1,10 @@
 # Smaller proof and reward design choices
 
+The author now requires contributions to remain useful after subsidy ends.
+A positive fee allocation is therefore required; all fees to the finder is only
+a comparison control. The newer [operator comparison](OPERATOR_COMPARISON.md)
+supersedes the recommendations below where they conflict.
+
 25 September 2026. Version 4 is implemented. Fee and maturity alternatives in
 this document are comparisons, not additional consensus settings.
 
