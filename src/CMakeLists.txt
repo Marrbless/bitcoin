@@ -240,6 +240,8 @@ add_library(bitcoin_node STATIC EXCLUDE_FROM_ALL
   blockencodings.cpp
   blockfilter.cpp
   consensus/tx_verify.cpp
+  consensus/gateway_allocation.cpp
+  consensus/node_contribution.cpp
   dbwrapper.cpp
   deploymentstatus.cpp
   flatfile.cpp
@@ -283,6 +285,7 @@ add_library(bitcoin_node STATIC EXCLUDE_FROM_ALL
   node/mempool_persist.cpp
   node/mempool_persist_args.cpp
   node/miner.cpp
+  node/native_stratum.cpp
   node/mini_miner.cpp
   node/peerman_args.cpp
   node/psbt.cpp

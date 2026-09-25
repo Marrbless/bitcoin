@@ -10,34 +10,16 @@
 #include <streams.h>
 #include <tinyformat.h>
 
-uint256 CBlockHeader::GetHash() const
+uint256 CBlockHeader::GetMiningCommitment() const
 {
-    if (!m_header_v2) {  // SHA256d
-        // Historical algorithm and common case.
-        Assume(AreHeaderV2FieldsNull());
-        return (HashWriter{} << *this).GetHash();
-    }
-
-    // BLAKE2b
-
+    Assert(m_header_v2);
     static constexpr uint128 zeros{};
-
     // The pooling miner doesn't know m_xor_key (only the hash of it) until it finds a block
     auto xor_key_hash = TaggedHash("Bitcoin block hash PoW XOR key");
     xor_key_hash << m_xor_key;
     Assert(xor_key_hash.BytesWritten() == 0x40 + 0x10);  // TaggedHash adds 0x40 bytes extra
 
-    uint256 xor_key_mask;
-    if (!m_xor_key.IsNull()) {
-        xor_key_mask = (TaggedHash("Bitcoin block hash PoW XOR mask") << m_xor_key).GetSHA256();
-        const unsigned int xor_key_mask_clear_bytes = m_xor_key_mask_clear_bits / 8;
-        std::fill_n(xor_key_mask.begin(), xor_key_mask_clear_bytes, uint8_t{0});
-        xor_key_mask.begin()[xor_key_mask_clear_bytes] &= 0xffU >> (m_xor_key_mask_clear_bits % 8);
-    }
-
     const uint256 prevblock_ordered_sane{hashPrevBlock.ReversedBytes()};
-    uint256 prevblock_hidden = (TaggedHash("Bitcoin prevblock header, hashed") << prevblock_ordered_sane).GetSHA256();
-
     // These fields are invisible to the mining machine
     // This means the hasher cannot brick itself at some future block version, time, or difficulty
     auto h1 = TaggedHash("Bitcoin block header 1");
@@ -60,7 +42,33 @@ uint256 CBlockHeader::GetHash() const
     h2 << m_mm_rhs;
     Assert(h2.BytesWritten() == 0x40 + 0x60);
 
-    const uint256 h2_hash{h2.GetSHA256()};
+    return h2.GetSHA256();
+}
+
+uint256 CBlockHeader::GetHash() const
+{
+    if (!m_header_v2) {  // SHA256d
+        // Historical algorithm and common case.
+        Assume(AreHeaderV2FieldsNull());
+        return (HashWriter{} << *this).GetHash();
+    }
+
+    // BLAKE2b
+
+    static constexpr uint128 zeros{};
+
+    uint256 xor_key_mask;
+    if (!m_xor_key.IsNull()) {
+        xor_key_mask = (TaggedHash("Bitcoin block hash PoW XOR mask") << m_xor_key).GetSHA256();
+        const unsigned int xor_key_mask_clear_bytes = m_xor_key_mask_clear_bits / 8;
+        std::fill_n(xor_key_mask.begin(), xor_key_mask_clear_bytes, uint8_t{0});
+        xor_key_mask.begin()[xor_key_mask_clear_bytes] &= 0xffU >> (m_xor_key_mask_clear_bits % 8);
+    }
+
+    const uint256 prevblock_ordered_sane{hashPrevBlock.ReversedBytes()};
+    uint256 prevblock_hidden = (TaggedHash("Bitcoin prevblock header, hashed") << prevblock_ordered_sane).GetSHA256();
+
+    const uint256 h2_hash{GetMiningCommitment()};
 
     // These fields get sent to mining machines over Sv1
     DataStream ss;

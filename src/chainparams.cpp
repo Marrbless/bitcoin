@@ -76,6 +76,14 @@ void ReadRegTestArgs(const ArgsManager& args, CChainParams::RegTestOptions& opti
         }
     }
 
+    if (const auto arg{args.GetArg("-testgatewayallocationheight")}; arg) {
+        int32_t height;
+        if (!ParseInt32(*arg, &height) || height < 1 || height >= std::numeric_limits<int>::max()) {
+            throw std::runtime_error("Invalid gateway allocation activation height");
+        }
+        options.gateway_allocation_height = height;
+    }
+
     if (const auto arg{args.GetArg("-rdtsexpiry", "")}; !arg.empty()) {
         // RDTS activates at the BLAKE2b fork height: one fork instant, as on
         // mainnet. Only the deployment's expiry is schedulable here; a
@@ -190,6 +198,9 @@ const CChainParams &Params() {
 
 std::unique_ptr<const CChainParams> CreateChainParams(const ArgsManager& args, const ChainType chain)
 {
+    if (chain != ChainType::REGTEST && (args.IsArgSet("-testgatewayallocationheight") || args.IsArgSet("-testgatewaykeys"))) {
+        throw std::runtime_error("Experimental gateway allocation is regtest-only");
+    }
     switch (chain) {
     case ChainType::MAIN:
         return CChainParams::Main();

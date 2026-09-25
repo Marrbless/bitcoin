@@ -16,6 +16,8 @@
 #include <consensus/merkle.h>
 #include <consensus/tx_check.h>
 #include <consensus/tx_verify.h>
+#include <consensus/gateway_allocation.h>
+#include <consensus/node_contribution.h>
 #include <consensus/validation.h>
 #include <cuckoocache.h>
 #include <deploymentinfo.h>
@@ -3107,6 +3109,10 @@ bool Chainstate::ConnectBlock(const CBlock& block, BlockValidationState& state, 
     if (block.vtx[0]->GetValueOut() > blockReward && state.IsValid()) {
         state.Invalid(BlockValidationResult::BLOCK_CONSENSUS, "bad-cb-amount",
                       strprintf("coinbase pays too much (actual=%d vs limit=%d)", block.vtx[0]->GetValueOut(), blockReward));
+    }
+
+    if (state.IsValid() && pindex->nHeight >= params.GetConsensus().GatewayAllocationHeight) {
+        Consensus::CheckNodeContributions(block, pindex->pprev, params.GetConsensus(), blockReward, state);
     }
 
     auto parallel_result = control.Complete();

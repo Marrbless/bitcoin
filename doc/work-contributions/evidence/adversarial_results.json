@@ -1,0 +1,248 @@
+[
+  {
+    "name": "funding block accepted",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "valid control",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "valid control parent compatibility",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "aggregated recipient outputs accepted",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "split identical recipient output accepted",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "early lock shortened rejected by proposal",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "early lock shortened allowed by parent",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "finder key substituted rejected by proposal",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "finder key substituted allowed by parent",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "one sat redirected rejected by proposal",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "one sat redirected allowed by parent",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "assigned reward underclaimed rejected by proposal",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "assigned reward underclaimed allowed by parent",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "finder metadata duplicated rejected by proposal",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "finder metadata duplicated allowed by parent",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "all certificate truncations rejected",
+    "actual": 336,
+    "expected": 336,
+    "passed": true
+  },
+  {
+    "name": "bounded random certificate corpus rejected",
+    "actual": 256,
+    "expected": 256,
+    "passed": true
+  },
+  {
+    "name": "reused work with changed early recipient rejected",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "reused work with changed late recipient rejected",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "reused work with changed transaction rejected",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "reused work with changed locktime rejected",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "poisoned batch has no accepted proofs",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "hostile validation batch is rate limited",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "rejected batch leaves proof inbox empty",
+    "actual": [],
+    "expected": [],
+    "passed": true
+  },
+  {
+    "name": "valid contribution accepted after budget replenishes",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "repeat authorization rejected",
+    "actual": false,
+    "expected": false,
+    "passed": true
+  },
+  {
+    "name": "full block survives hostile contribution traffic",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "accepted block is submitted work",
+    "actual": "311977d041292c74eb0e54c6d6512930e22b6c5941c3e561b333657167f8b808",
+    "expected": "311977d041292c74eb0e54c6d6512930e22b6c5941c3e561b333657167f8b808",
+    "passed": true
+  },
+  {
+    "name": "attack recovery block accepted by parent",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "chainstate reindex reproduces settlement tip",
+    "actual": "311977d041292c74eb0e54c6d6512930e22b6c5941c3e561b333657167f8b808",
+    "expected": "311977d041292c74eb0e54c6d6512930e22b6c5941c3e561b333657167f8b808",
+    "passed": true
+  },
+  {
+    "name": "reindex then reorg restores exact parent",
+    "actual": 100,
+    "expected": 100,
+    "passed": true
+  },
+  {
+    "name": "earned proof valid after restored parent",
+    "actual": 1,
+    "expected": 1,
+    "passed": true
+  },
+  {
+    "name": "reconsider restores settled chain after reindex",
+    "actual": "311977d041292c74eb0e54c6d6512930e22b6c5941c3e561b333657167f8b808",
+    "expected": "311977d041292c74eb0e54c6d6512930e22b6c5941c3e561b333657167f8b808",
+    "passed": true
+  },
+  {
+    "name": "reorg crosses activation boundary",
+    "actual": 99,
+    "expected": 99,
+    "passed": true
+  },
+  {
+    "name": "ordinary reward valid below activation after reorg",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "alternate parent accepted by inherited node",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "unrestricted reward still allowed by parent",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "activation reapplied on alternate branch",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "restricted reward accepted on alternate branch",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "alternate activation block accepted by parent",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "nodes agree after activation boundary reorg",
+    "actual": "1f8d8cc8531675fa5f63a9a2425168e3ca617c85029320df7da03a1218ca8ee4",
+    "expected": "1f8d8cc8531675fa5f63a9a2425168e3ca617c85029320df7da03a1218ca8ee4",
+    "passed": true
+  }
+]

@@ -165,6 +165,8 @@ public:
         return true;
     }
 
+    // Inherited BLAKE2b h2 commitment shared with in-node mining jobs.
+    uint256 GetMiningCommitment() const;
     uint256 GetHash() const;
 };
 

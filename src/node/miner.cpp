@@ -13,6 +13,9 @@
 #include <consensus/consensus.h>
 #include <consensus/merkle.h>
 #include <consensus/tx_verify.h>
+#include <consensus/gateway_allocation.h>
+#include <util/strencodings.h>
+#include <util/string.h>
 #include <consensus/validation.h>
 #include <deploymentstatus.h>
 #include <logging.h>
@@ -210,6 +213,17 @@ std::shared_ptr<CBlockTemplate> BlockAssembler::CreateNewBlock()
     coinbaseTx.vout.resize(1);
     coinbaseTx.vout[0].scriptPubKey = m_options.coinbase_output_script;
     coinbaseTx.vout[0].nValue = nFees + GetBlockSubsidy(nHeight, chainparams.GetConsensus());
+    if (nHeight >= chainparams.GetConsensus().GatewayAllocationHeight) {
+        const auto keys{util::SplitString(m_node.args->GetArg("-testgatewaykeys", ""), ':')};
+        if (keys.size() != 2 || keys[0].size() != 66 || keys[1].size() != 66 || !IsHex(keys[0]) || !IsHex(keys[1])) {
+            throw std::runtime_error("Gateway allocation template requires -testgatewaykeys=<compressed_gateway_pubkey>:<compressed_hasher_pubkey>");
+        }
+        const CPubKey gateway{ParseHex(keys[0])}, hasher{ParseHex(keys[1])};
+        if (!gateway.IsCompressed() || !gateway.IsFullyValid() || !hasher.IsCompressed() || !hasher.IsFullyValid()) {
+            throw std::runtime_error("Invalid gateway allocation public keys");
+        }
+        coinbaseTx.vout = Consensus::GatewayAllocationOutputs(coinbaseTx.vout[0].nValue / 20, gateway, hasher);
+    }
     coinbaseTx.vin[0].scriptSig = CScript() << nHeight << OP_0;
     if (nHeight == chainparams.GetConsensus().DeploymentHeight(Consensus::DEPLOYMENT_BLAKE2B)) {
         coinbaseTx.vin[0].scriptSig << chainparams.GetConsensus().Blake2bHeadline;

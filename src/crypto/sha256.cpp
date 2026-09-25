@@ -763,6 +763,21 @@ CSHA256& CSHA256::Reset()
     return *this;
 }
 
+bool CSHA256::GetMidstateAligned(unsigned char state[OUTPUT_SIZE]) const
+{
+    if (bytes % 64) return false;
+    for (size_t i=0; i<8; ++i) WriteBE32(state+4*i, s[i]);
+    return true;
+}
+
+bool CSHA256::SetMidstateAligned(const unsigned char state[OUTPUT_SIZE], uint64_t prefix_bytes)
+{
+    if (prefix_bytes % 64 || prefix_bytes > (uint64_t{1} << 61)-128) return false;
+    for (size_t i=0; i<8; ++i) s[i]=ReadBE32(state+4*i);
+    bytes=prefix_bytes;
+    return true;
+}
+
 void SHA256D64(unsigned char* out, const unsigned char* in, size_t blocks)
 {
     if (TransformD64_8way) {

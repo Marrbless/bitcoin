@@ -1,0 +1,62 @@
+[
+  {
+    "name": "SHA funding",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "SHA native/Python candidate codec agrees",
+    "actual": "03000000207036031a2fb8c43a6143779d37f71871b80058010ea4abfa9a8b098cacf7691c95ad6b39cd05c04c1defcc2a3c78f34f90033d30f1f769a79111fb0f4d8edac54bd04a4dffff7f200000000072010000d17c2077da10214b29744f19a104ff813d823137b71f8abd732d91b6bb7d0acf013e219047a0063ec9723db87dc935314851e743fc28738c88bc9e87e4ce41460b3e219047a0063ec9723db87dc935314851e743fc28738c88bc9e87e4ce41460b0279be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f8179802c6047f9441ed7d6d3045406e95c07cd85c778e4b8cef3ca7abac09b95c709ee500000000",
+    "expected": "03000000207036031a2fb8c43a6143779d37f71871b80058010ea4abfa9a8b098cacf7691c95ad6b39cd05c04c1defcc2a3c78f34f90033d30f1f769a79111fb0f4d8edac54bd04a4dffff7f200000000072010000d17c2077da10214b29744f19a104ff813d823137b71f8abd732d91b6bb7d0acf013e219047a0063ec9723db87dc935314851e743fc28738c88bc9e87e4ce41460b3e219047a0063ec9723db87dc935314851e743fc28738c88bc9e87e4ce41460b0279be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f8179802c6047f9441ed7d6d3045406e95c07cd85c778e4b8cef3ca7abac09b95c709ee500000000",
+    "passed": true
+  },
+  {
+    "name": "parent accepts oversized output outside RDTS",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "new consensus rejects oversized output outside RDTS",
+    "actual": "n8-output-size",
+    "expected": "n8-output-size",
+    "passed": true
+  },
+  {
+    "name": "native encoder strong work accepted",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "native encoder queued one proof",
+    "actual": 1,
+    "expected": 1,
+    "passed": true
+  },
+  {
+    "name": "certificate version3",
+    "actual": 3,
+    "expected": 3,
+    "passed": true
+  },
+  {
+    "name": "all settlement scripts <=83",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "SHA settlement accepted",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "SHA settlement parent compatible",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  }
+]
