@@ -1,0 +1,111 @@
+{
+  "scope": "Constant budget, independent work, unbounded time horizon, instantaneous full relay, compatible Xs, no target clipping unless stated. No strategic withholding, latency, price or adoption forecast.",
+  "seed": 20260925,
+  "samples": 1000000,
+  "analytic": {
+    "expected_weak_before_block": 19,
+    "variance_weak_before_block": 380,
+    "expected_paid_fraction": 0.6415140775914581,
+    "expected_unclaimed_fraction": 0.35848592240854193,
+    "probability_all_slots_filled": 0.37735360253530725
+  },
+  "simulation": {
+    "mean_weak": 18.989302,
+    "mean_paid_fraction": 0.6414253999999778,
+    "paid_standard_error": 0.0003498848828326908,
+    "all_slots_fraction": 0.377165
+  },
+  "multiplier_sweep_fixed_twenty_slots": [
+    {
+      "effective_multiplier": 2,
+      "expected_paid_fraction": 0.09999990463256836,
+      "probability_all_slots_filled": 1.9073486328125e-06
+    },
+    {
+      "effective_multiplier": 5,
+      "expected_paid_fraction": 0.24711769623848295,
+      "probability_all_slots_filled": 0.014411518807585602
+    },
+    {
+      "effective_multiplier": 10,
+      "expected_paid_fraction": 0.43921167270471545,
+      "probability_all_slots_filled": 0.13508517176729928
+    },
+    {
+      "effective_multiplier": 20,
+      "expected_paid_fraction": 0.6415140775914575,
+      "probability_all_slots_filled": 0.37735360253530725
+    },
+    {
+      "effective_multiplier": 40,
+      "expected_paid_fraction": 0.7946246395617991,
+      "probability_all_slots_filled": 0.6181412104811284
+    },
+    {
+      "effective_multiplier": 100,
+      "expected_paid_fraction": 0.9104653120138456,
+      "probability_all_slots_filled": 0.8261686238355866
+    },
+    {
+      "effective_multiplier": 200,
+      "expected_paid_fraction": 0.9538951972538235,
+      "probability_all_slots_filled": 0.9091562615825302
+    }
+  ],
+  "marginal_fee_allocation": [
+    {
+      "credited_foreign_proofs": 0,
+      "fee_delta_sats": 400000,
+      "finder_sats": 20000,
+      "contributors_sats": 0,
+      "unclaimed_sats": 380000,
+      "finder_fraction": 0.05
+    },
+    {
+      "credited_foreign_proofs": 1,
+      "fee_delta_sats": 400000,
+      "finder_sats": 21000,
+      "contributors_sats": 19000,
+      "unclaimed_sats": 360000,
+      "finder_fraction": 0.0525
+    },
+    {
+      "credited_foreign_proofs": 10,
+      "fee_delta_sats": 400000,
+      "finder_sats": 30000,
+      "contributors_sats": 190000,
+      "unclaimed_sats": 180000,
+      "finder_fraction": 0.075
+    },
+    {
+      "credited_foreign_proofs": 19,
+      "fee_delta_sats": 400000,
+      "finder_sats": 39000,
+      "contributors_sats": 361000,
+      "unclaimed_sats": 0,
+      "finder_fraction": 0.0975
+    }
+  ],
+  "illustrative_discount_rates": [
+    {
+      "assumed_annual_rate": 0,
+      "allocation_present_value": 1.0,
+      "baseline_100_block_present_value": 1.0
+    },
+    {
+      "assumed_annual_rate": 0.05,
+      "allocation_present_value": 0.9731918909556936,
+      "baseline_100_block_present_value": 0.9999071767509444
+    },
+    {
+      "assumed_annual_rate": 0.1,
+      "allocation_present_value": 0.948704553653896,
+      "baseline_100_block_present_value": 0.9998186804818393
+    },
+    {
+      "assumed_annual_rate": 0.2,
+      "allocation_present_value": 0.9055530405706098,
+      "baseline_100_block_present_value": 0.9996531774384486
+    }
+  ]
+}

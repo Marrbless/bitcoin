@@ -2,7 +2,7 @@
 
 Marrbless
 
-Proposal draft 0.4
+Proposal draft 0.5
 
 25 September 2026
 
@@ -100,11 +100,17 @@ This format reuses existing coinbase outputs and the inherited header and hash a
 
 A finder with an empty slot can earn a fee by crediting a compatible contribution. Including the contribution requires including its X. Excluding it gives up that fee when no better use of the slot exists. This creates an economic reason to accept another miner's transaction contribution.
 
+Empty slots also arise without exclusion. Under independent work, complete immediate relay, compatible transactions and a fixed reward budget, the current multiplier and cap pay an average of 64.15% of the budget. The remaining 35.85% is unclaimed. The average of nineteen weak results does not mean nineteen arrive before each full block. Short intervals leave empty slots and long intervals cannot carry excess shares forward. The [system review](SYSTEM_REVIEW.md) gives the derivation and a reproducible model. Unclaimed rewards therefore cannot by themselves measure censorship or failure to run nodes.
+
+Sharing transaction fees introduces another tradeoff. With nineteen contributions owned by others, the finder receives 9.75% of an additional fee. Direct compensation to the finder can avoid that redistribution and these coinbase locks. This creates a reason to compare sharing subsidy alone with sharing subsidy plus fees before choosing the reward basis. The implemented basis has not changed.
+
 The comparison changes when slots are full. A finder may already possess qualifying work that pays its own group. Selecting that work need not require new equipment or additional hashing at the time of selection. Transaction size, fees and conflicts also affect the decision. We therefore do not claim a fixed cost for every act of exclusion.
 
 A miner running its own node can choose X and control both reward keys. An external node can also place the miner's keys in both allocations. It may return all rewards while retaining transaction selection, charge a small fee shared across many customers, or operate with outside funding. The consensus rule cannot distinguish these arrangements from independent operation.
 
 Longer locks increase the capital required to advance immature rewards. They also delay receipts for miners running their own nodes. They do not make a continuing reserve impossible once older rewards begin to mature. The claim that any split eliminates delegation profits is therefore not established.
+
+Capital costs apply to independent miners as well as services. Longer locks may favor operators with cheaper financing. They should be evaluated alongside the split and slot rules, rather than treated as a penalty that only external gateways bear.
 
 The comparison we need holds hashpower, cooperating group size, transaction workload, delivery conditions and payment schedule constant. We then compare the cost of running a node with service fees, financing costs and custody exposure. The value a miner assigns to choosing X should be stated separately. Transactions paying the sender's own keys and repeated Xs remain valid; any recovered fees must be included in the accounting.
 
@@ -118,6 +124,8 @@ Fresh builds of the candidate and unmodified release passed 222 recorded checks 
 
 Additional signed maturity, sustained socket and sanitizer results are reported separately in the validation report. The [security review](SECURITY_REVIEW.md) records the remaining attack surface and a possible smaller commitment using an existing BLAKE2b header field. That alternative has not been adopted.
 
+A subsequent review added 70 native checks for marginal fee allocation, precise rejection of a missing X, the inherited header hook and composition with temporary coinbase maturity. The 54 check fee and header suite also passed with address and undefined behavior sanitizers. The header experiment supports investigating a 263 byte certificate, but that format is not implemented as consensus. The current proof remains version 3.
+
 The [validation report](VALIDATION.md) contains the evidence and remaining work. Physical ASICs, a public testnet, complete upstream test suites and independent consensus review have not been completed. Earlier parameter simulations are not reproduced by this test runner and do not establish economic adoption.
 
 ## 8. Conclusion
@@ -126,7 +134,7 @@ We have implemented a rule under which a mining contribution can be paid only wh
 
 The implementation is a candidate soft fork relative to the inherited BLAKE2b release. It adds restrictions to valid blocks without granting additional work, issuance or spending permission. Production activation is not proposed here.
 
-The remaining question is whether the available reward settings make this arrangement preferable to delegation under realistic costs. The mechanism is implemented. That economic result still needs to be demonstrated.
+The remaining questions include reward utilization, fee incentives, financing costs and whether a simpler proof can enforce the same conditional rule. These decisions affect whether the mechanism makes independent node operation preferable under realistic costs. That economic result has not been demonstrated.
 
 ## References
 

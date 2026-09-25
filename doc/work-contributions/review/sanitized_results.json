@@ -1,0 +1,326 @@
+[
+  {
+    "name": "funding accepted",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "0 proof fee 400000 accepted by candidate",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "0 proof fee 400000 accepted by parent",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "0 proof fee 800000 accepted by candidate",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "0 proof fee 800000 accepted by parent",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "0 proof finder marginal fees",
+    "actual": 20000,
+    "expected": 20000,
+    "passed": true
+  },
+  {
+    "name": "0 proof total marginal fees",
+    "actual": 20000,
+    "expected": 20000,
+    "passed": true
+  },
+  {
+    "name": "1 proof fee 400000 accepted by candidate",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "1 proof fee 400000 accepted by parent",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "1 proof fee 800000 accepted by candidate",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "1 proof fee 800000 accepted by parent",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "1 proof finder marginal fees",
+    "actual": 21000,
+    "expected": 21000,
+    "passed": true
+  },
+  {
+    "name": "1 proof total marginal fees",
+    "actual": 40000,
+    "expected": 40000,
+    "passed": true
+  },
+  {
+    "name": "10 proof fee 400000 accepted by candidate",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "10 proof fee 400000 accepted by parent",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "10 proof fee 800000 accepted by candidate",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "10 proof fee 800000 accepted by parent",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "10 proof finder marginal fees",
+    "actual": 30000,
+    "expected": 30000,
+    "passed": true
+  },
+  {
+    "name": "10 proof total marginal fees",
+    "actual": 220000,
+    "expected": 220000,
+    "passed": true
+  },
+  {
+    "name": "19 proof fee 400000 accepted by candidate",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "19 proof fee 400000 accepted by parent",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "19 proof fee 800000 accepted by candidate",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "19 proof fee 800000 accepted by parent",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "19 proof finder marginal fees",
+    "actual": 39000,
+    "expected": 39000,
+    "passed": true
+  },
+  {
+    "name": "19 proof total marginal fees",
+    "actual": 400000,
+    "expected": 400000,
+    "passed": true
+  },
+  {
+    "name": "missing X control remains valid under inherited rules",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "missing X reaches contribution rejection",
+    "actual": "n5-missing-x",
+    "expected": "n5-missing-x",
+    "passed": true
+  },
+  {
+    "name": "profile 0 hook block accepted by candidate",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "profile 0 hook block accepted by parent",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "profile 0 native work hash agrees",
+    "actual": "2d115db42f96199e46dd600250f6a4ededa6188dd428abbafaa2cebe7042e1d6",
+    "expected": "2d115db42f96199e46dd600250f6a4ededa6188dd428abbafaa2cebe7042e1d6",
+    "passed": true
+  },
+  {
+    "name": "profile 0 inherited hook unchanged",
+    "actual": "d5166d3152341f381ad07db0c9e4ed04e8408388cb9c8a4726d58e966c896d73",
+    "expected": "d5166d3152341f381ad07db0c9e4ed04e8408388cb9c8a4726d58e966c896d73",
+    "passed": true
+  },
+  {
+    "name": "profile 0 alternative certificate size",
+    "actual": 263,
+    "expected": 263,
+    "passed": true
+  },
+  {
+    "name": "profile 0 hook mutation changes work hash",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "profile 1 hook block accepted by candidate",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "profile 1 hook block accepted by parent",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "profile 1 native work hash agrees",
+    "actual": "2340734eb0f057d8142478b17e7d571159f4344a87f44527246ed0f25d302fb6",
+    "expected": "2340734eb0f057d8142478b17e7d571159f4344a87f44527246ed0f25d302fb6",
+    "passed": true
+  },
+  {
+    "name": "profile 1 inherited hook unchanged",
+    "actual": "d5166d3152341f381ad07db0c9e4ed04e8408388cb9c8a4726d58e966c896d73",
+    "expected": "d5166d3152341f381ad07db0c9e4ed04e8408388cb9c8a4726d58e966c896d73",
+    "passed": true
+  },
+  {
+    "name": "profile 1 alternative certificate size",
+    "actual": 263,
+    "expected": 263,
+    "passed": true
+  },
+  {
+    "name": "profile 1 hook mutation changes work hash",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "profile 2 hook block accepted by candidate",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "profile 2 hook block accepted by parent",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "profile 2 native work hash agrees",
+    "actual": "01b0631ab8ef87e8a21b6beeec6c2a8358c4a137bbbdeed31029fe83b1f5ee63",
+    "expected": "01b0631ab8ef87e8a21b6beeec6c2a8358c4a137bbbdeed31029fe83b1f5ee63",
+    "passed": true
+  },
+  {
+    "name": "profile 2 inherited hook unchanged",
+    "actual": "d5166d3152341f381ad07db0c9e4ed04e8408388cb9c8a4726d58e966c896d73",
+    "expected": "d5166d3152341f381ad07db0c9e4ed04e8408388cb9c8a4726d58e966c896d73",
+    "passed": true
+  },
+  {
+    "name": "profile 2 alternative certificate size",
+    "actual": 263,
+    "expected": 263,
+    "passed": true
+  },
+  {
+    "name": "profile 2 hook mutation changes work hash",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "profile 3 hook block accepted by candidate",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "profile 3 hook block accepted by parent",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "profile 3 native work hash agrees",
+    "actual": "3917d24cdd7f29f339a427c3efcaa6b7beb3b80b44e44d3176a235c155f5e6ee",
+    "expected": "3917d24cdd7f29f339a427c3efcaa6b7beb3b80b44e44d3176a235c155f5e6ee",
+    "passed": true
+  },
+  {
+    "name": "profile 3 inherited hook unchanged",
+    "actual": "d5166d3152341f381ad07db0c9e4ed04e8408388cb9c8a4726d58e966c896d73",
+    "expected": "d5166d3152341f381ad07db0c9e4ed04e8408388cb9c8a4726d58e966c896d73",
+    "passed": true
+  },
+  {
+    "name": "profile 3 alternative certificate size",
+    "actual": 263,
+    "expected": 263,
+    "passed": true
+  },
+  {
+    "name": "profile 3 hook mutation changes work hash",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "alternate terms change hook: X",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "alternate terms change hook: early key",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "alternate terms change hook: late key",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  }
+]

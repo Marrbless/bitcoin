@@ -18,6 +18,8 @@ performs actual easy-regtest work. Fixtures use publicly known test-only keys
 | test_adversarial.py | 41 | Recipient attacks, all certificate truncations, random malformed corpus, admission limits, chainstate reindex and reorg |
 | test_maturity.py | 36 | Optional real signed early and late reward spends, premature spends and sequence bypass attempts |
 | test_stress.py | 6 | Optional hostile socket traffic with interleaved real block production and RSS sampling |
+| test_review.py | 54 | Optional native fee deltas, precise missing X rejection and inherited header hook experiment |
+| test_maturity_overlap.py | 16 | Optional inherited temporary maturity restriction, release and reorganisation with CSV rewards |
 
 The default run includes the first four suites. Add `--extended` for the signed
 maturity campaign, which validates more than 52,000 blocks on both nodes. Add
@@ -25,6 +27,12 @@ maturity campaign, which validates more than 52,000 blocks on both nodes. Add
 3,600 seconds, default 120. `CONTRIBUTION_FUZZ_CASES` selects 256 to 100,000
 deterministic random certificates, default 256. These random bytes supplement
 the targeted cases; this is not a coverage guided fuzzer.
+
+Add `--review` to execute both new review suites. The smaller certificate is
+modeled in a test only; v3 remains the implemented consensus format. The
+separate `review_economics.py --output PATH` script runs an analytic and seeded
+one million interval model. It uses no live network data and is not an adoption
+test. The reviewed model output is in `doc/work-contributions/review/`.
 
 `summary.json` records binary hashes and suite exit statuses. Individual JSON
 files include failed assertions when reached; logs retain tracebacks. A nonzero
@@ -34,6 +42,6 @@ These are recorded assertions, not independent proofs of security.
 
 This standalone research runner is not yet integrated into `test_runner.py`.
 It does not execute the full upstream functional/unit/fuzz suites, a physical
-ASIC test, public-testnet trial, or economic/adoption experiment. Inherited
-long-maturity overlaps, assumevalid and activation reorganisation campaigns
-remain outside the signed maturity fixture.
+ASIC test, public-testnet trial, or economic/adoption experiment. A temporary
+long-maturity overlap is exercised by the review suite. Assumevalid, crash
+recovery and a broader matrix of activation interactions remain outstanding.

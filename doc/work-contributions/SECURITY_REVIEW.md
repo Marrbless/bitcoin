@@ -44,6 +44,11 @@ connections or saturate the network.
 
 ## A smaller commitment may be possible
 
+The subsequent [system review](SYSTEM_REVIEW.md) includes an experiment accepted
+by candidate and parent on all four inherited profiles. It also records reward
+utilization, marginal fee effects and a temporary maturity overlap test. The
+alternative certificate remains a model, not an implemented consensus rule.
+
 The inherited BLAKE2b header already contains `m_mm_rhs`, a 32 byte input to
 the tagged merge mining hook included in the work hash. The inherited
 `feature_powchange.py` test accepts a block with this field nonzero.
@@ -84,7 +89,7 @@ the research objective, not a demonstrated consensus guarantee.
 2. Independently review the exact consensus specification and binding argument.
 3. Add coverage guided parser fuzzing, sanitizer campaigns and arithmetic tests
    to normal upstream test infrastructure.
-4. Test inherited maturity overlaps, additional activation and reorganisation boundaries,
+4. Extend the tested maturity overlap to a broader matrix of activation and reorganisation boundaries,
    assumevalid and interrupted persistence operations.
 5. Specify resource and peer delivery policies, then test realistic latency,
    adversarial contention and recovery with independent node operators.

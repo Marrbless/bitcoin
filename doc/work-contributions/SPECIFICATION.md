@@ -1,4 +1,4 @@
-# Work-bound transaction contributions — draft specification 0.2
+# Work-bound transaction contributions — draft specification 0.3
 
 Status: research specification, 2026-09-25. Implemented research format v3; not an activation proposal or frozen standard.
 
@@ -12,11 +12,10 @@ This proposal introduces no second chain, extra chainwork, identity registry, sh
 
 ## Source and version boundary
 
-Research parent: luke-jr/bitcoin `4663b7b2a73585074cb4113aaf0846efad68f6d6`.
 Submission base: bitcoinknots/bitcoin `58398baf33e588779685ead478e6397bb28ed3d6`
-(`29.x-knots`). This patch consolidates N1–N9 and preserves the parent's BLAKE2b
-algorithm and profiles. The N8 consensus codec and N9 in-node endpoint are
-implemented. The endpoint serves profile 0; consensus tests cover all four profiles.
+(`v29.4.2.knots20260508`). The patch preserves the parent's BLAKE2b algorithm
+and profiles. The implemented certificate version is 3. The private endpoint
+serves profile 0; consensus tests cover all four profiles.
 
 ## Provisional control parameters
 
@@ -158,3 +157,10 @@ Conditional comparison, at matched hashpower, group size and inclusion access: n
 ## Completion criteria
 
 Independently review and freeze the implemented BLAKE encoding and source-proof contract; extend the native port and cross-node compatibility evidence; demonstrate bounded resource behavior; reproduce the economic comparison including full rebates; perform independent consensus/cryptographic review; publish the white paper and implementation with limitations. A testnet success demonstrates operation under the tested conditions, not real-money adoption or guaranteed censorship resistance.
+
+## Subsequent system review
+
+[SYSTEM_REVIEW.md](SYSTEM_REVIEW.md) derives the intrinsic empty-slot benchmark,
+checks marginal fee allocation against native blocks, examines financing and
+documents an alternative use of the inherited BLAKE2b header. None of those
+experiments changes the normative v3 rules or selects new parameter values.

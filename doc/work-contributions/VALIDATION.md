@@ -44,8 +44,8 @@ before each relative maturity boundary and accepted at the boundary. Actual
 signed contributor spends were connected at both boundaries. Short, disabled
 and time based sequence values, version 1 and a shortened witness script did
 not bypass the locks. The late spend also exercised settlement funded by fees
-with zero regtest subsidy. This does not cover inherited temporary long
-maturity overlaps or their release.
+with zero regtest subsidy. The subsequent review adds a separate temporary long maturity overlap and
+release fixture, described below.
 
 The final 120 second socket fixture opened 7,552 hostile connections while
 accepting 472 real regtest blocks. Sampled resident memory grew from 52,539,392
@@ -85,7 +85,7 @@ guided fuzzing.
 
 The [security review](SECURITY_REVIEW.md) describes the open design questions
 and attack surface. Independent cryptographic and consensus review, coverage
-guided fuzzing, inherited maturity overlap tests, assumevalid and crash recovery,
+guided fuzzing, a broader maturity and activation matrix, assumevalid and crash recovery,
 the full upstream suites, platform builds, realistic multi operator networking
 and physical ASIC tests remain. Neither a public testnet nor an empirical
 adoption experiment has been completed. The economic advantage of operating
@@ -94,3 +94,24 @@ one's own node remains unproved.
 These results support review of a disabled research proposal. They do not
 establish production readiness, exhaustive compatibility or censorship
 resistance. No production activation is included.
+
+## Subsequent system review
+
+On the same C++ binaries, `test_review.py` passed 54 checks in both Release and
+address plus undefined behavior builds. Native fee deltas match the allocation
+formula. The missing X fixture now preserves inherited witness validity and
+asserts the specific contribution rejection. Actual blocks using an exploratory
+header hook commitment were accepted by candidate and parent on all four
+BLAKE2b profiles. This is not a v4 consensus implementation.
+
+`test_maturity_overlap.py` passed 16 Release checks through height 7,101.
+The inherited temporary restriction overrode CSV eligibility, release allowed
+the signed spend, and a reorganisation restored the inherited lock. The initial
+fixture called submitblock on its Node wrapper rather than the RPC object;
+the corrected fixture was rerun in full.
+
+The separate one million interval model agrees with the analytic fixed budget
+benchmark. Its findings are design evidence, not live network measurements.
+Results, binary identities and source hashes are under [review/](review/).
+Use `--review` to reproduce both native suites. No additional C++ changes were
+needed for these experiments.

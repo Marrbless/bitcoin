@@ -10,6 +10,7 @@ It is disabled by default and supplies no mainnet activation. Target base:
 - [Endpoint](ENDPOINT.md): Linux-only Sia-style BLAKE2b profile-0 mining interface.
 - [Validation](VALIDATION.md): tests run on this submission and outstanding gates.
 - [Security review](SECURITY_REVIEW.md): the reproduced finding, attack surface and open design work.
+- [System review](SYSTEM_REVIEW.md): slot utilization, fee incentives, financing and the inherited header experiment.
 - [Test runner](../../test/functional/work_contributions/README.md): reproducible commands.
 
 ## Review map
