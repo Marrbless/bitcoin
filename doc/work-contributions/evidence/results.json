@@ -1,0 +1,764 @@
+[
+  {
+    "name": "funding accepted",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "parent and candidate at same BLAKE tip",
+    "actual": "76d5c660910631ff2e2acc0fcc098b63cad3ca7e6d6e0dddcea0251a8e6d4127",
+    "expected": "76d5c660910631ff2e2acc0fcc098b63cad3ca7e6d6e0dddcea0251a8e6d4127",
+    "passed": true
+  },
+  {
+    "name": "native candidate BLAKE header",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "native txcount refreshed",
+    "actual": 2,
+    "expected": 2,
+    "passed": true
+  },
+  {
+    "name": "source scripts <=83",
+    "actual": 83,
+    "expected": 83,
+    "passed": true
+  },
+  {
+    "name": "profile 0 certificate length",
+    "actual": 336,
+    "expected": 336,
+    "passed": true
+  },
+  {
+    "name": "profile 0 C++ accepts contribution",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "profile 0 parent accepts settlement",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "profile 1 certificate length",
+    "actual": 336,
+    "expected": 336,
+    "passed": true
+  },
+  {
+    "name": "profile 1 C++ accepts contribution",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "profile 1 parent accepts settlement",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "profile 2 certificate length",
+    "actual": 336,
+    "expected": 336,
+    "passed": true
+  },
+  {
+    "name": "profile 2 C++ accepts contribution",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "profile 2 parent accepts settlement",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "profile 3 certificate length",
+    "actual": 336,
+    "expected": 336,
+    "passed": true
+  },
+  {
+    "name": "profile 3 C++ accepts contribution",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "profile 3 parent accepts settlement",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "midstate remainder fixture 0",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "midstate remainder fixture 1",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "midstate remainder fixture 2",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "midstate remainder fixture 3",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "midstate remainder fixture 4",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "midstate remainder fixture 5",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "midstate remainder fixture 6",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "midstate remainder fixture 7",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "midstate remainder fixture 8",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "midstate remainder fixture 9",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "midstate remainder fixture 10",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "midstate remainder fixture 11",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "midstate remainder fixture 12",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "midstate remainder fixture 13",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "midstate remainder fixture 14",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "midstate remainder fixture 15",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "midstate remainder fixture 16",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "midstate remainder fixture 17",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "midstate remainder fixture 18",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "midstate remainder fixture 19",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "midstate remainder fixture 20",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "midstate remainder fixture 21",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "midstate remainder fixture 22",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "midstate remainder fixture 23",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "midstate remainder fixture 24",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "midstate remainder fixture 25",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "midstate remainder fixture 26",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "midstate remainder fixture 27",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "midstate remainder fixture 28",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "midstate remainder fixture 29",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "midstate remainder fixture 30",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "midstate remainder fixture 31",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "midstate remainder fixture 32",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "midstate remainder fixture 33",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "midstate remainder fixture 34",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "midstate remainder fixture 35",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "midstate remainder fixture 36",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "midstate remainder fixture 37",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "midstate remainder fixture 38",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "midstate remainder fixture 39",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "midstate remainder fixture 40",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "midstate remainder fixture 41",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "midstate remainder fixture 42",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "midstate remainder fixture 43",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "midstate remainder fixture 44",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "midstate remainder fixture 45",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "midstate remainder fixture 46",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "midstate remainder fixture 47",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "midstate remainder fixture 48",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "midstate remainder fixture 49",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "midstate remainder fixture 50",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "midstate remainder fixture 51",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "midstate remainder fixture 52",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "midstate remainder fixture 53",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "midstate remainder fixture 54",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "midstate remainder fixture 55",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "midstate remainder fixture 56",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "midstate remainder fixture 57",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "midstate remainder fixture 58",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "midstate remainder fixture 59",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "midstate remainder fixture 60",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "midstate remainder fixture 61",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "midstate remainder fixture 62",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "midstate remainder fixture 63",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "all 64 SHA block remainders tested",
+    "actual": 64,
+    "expected": 64,
+    "passed": true
+  },
+  {
+    "name": "cap source outputs within83",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "19 real BLAKE contributions accepted",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "19 proof block parent-compatible",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "maximum certificates use 183 fragments",
+    "actual": 183,
+    "expected": 183,
+    "passed": true
+  },
+  {
+    "name": "19 maximum-length certificates accepted",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "maximum evidence parent-compatible under RDTS",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "maximum evidence output scripts <=83",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "invalid source txcount zero rejected",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "invalid source txcount too many rejected",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "invalid source txcount wrong depth rejected",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "20 proofs rejected",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "duplicate proof rejected",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "budget exact including fees",
+    "actual": 5000001000,
+    "expected": 5000001000,
+    "passed": true
+  },
+  {
+    "name": "one proof spans multiple legal fragments",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "missing fragment rejected",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "duplicate fragment rejected",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "noncontiguous fragments rejected",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "wrong payout rejected",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "oversize return rejected",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "missing X rejected",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "reordered fragment rejected",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "zero count fragment rejected",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "oversized count fragment rejected",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "short nonfinal fragment rejected",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "extra byte final fragment rejected",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "tampered version rejected",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "tampered header parent rejected",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "tampered merkle root rejected",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "tampered bits rejected",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "tampered header height rejected",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "tampered state rejected",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "tampered X rejected",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "tampered recipient rejected",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "fresh work on invalid height rejected",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "fresh work on invalid reserved flags rejected",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "fresh work on invalid past timestamp rejected",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "full block proof not credited as weak",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "truncated certificate rejected",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "trailing certificate rejected",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "actual settlement accepted by C++",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "actual settlement accepted by parent",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "tips agree",
+    "actual": "492434d9b4dcf7af5b78581276d4fe60c887fe7944a6e67a0dc4f035f6f5e292",
+    "expected": "492434d9b4dcf7af5b78581276d4fe60c887fe7944a6e67a0dc4f035f6f5e292",
+    "passed": true
+  },
+  {
+    "name": "old-parent proof expires",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "proof eligible after exact-parent restoration",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "settlement restored",
+    "actual": "492434d9b4dcf7af5b78581276d4fe60c887fe7944a6e67a0dc4f035f6f5e292",
+    "expected": "492434d9b4dcf7af5b78581276d4fe60c887fe7944a6e67a0dc4f035f6f5e292",
+    "passed": true
+  }
+]

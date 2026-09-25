@@ -1,0 +1,218 @@
+[
+  {
+    "name": "funding block",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "reward settlement",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "parent reward settlement",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "early finder one block early rejected",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "early finder parent also rejects early spend",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "early contributor one block early rejected",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "early contributor parent also rejects early spend",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "early finder boundary accepted",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "early finder parent boundary accepted",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "early contributor boundary accepted",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "early contributor parent boundary accepted",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "early short sequence cannot bypass lock",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "early disabled sequence cannot bypass lock",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "early time sequence cannot bypass lock",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "early old version cannot bypass lock",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "early short witness lock cannot bypass lock",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "early signed contribution reward actually spent",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "early spend accepted by parent",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "early spent output removed",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "late finder one block early rejected",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "late finder parent also rejects early spend",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "late contributor one block early rejected",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "late contributor parent also rejects early spend",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "late finder boundary accepted",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "late finder parent boundary accepted",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "late contributor boundary accepted",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "late contributor parent boundary accepted",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "late short sequence cannot bypass lock",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "late disabled sequence cannot bypass lock",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "late time sequence cannot bypass lock",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "late old version cannot bypass lock",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "late short witness lock cannot bypass lock",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "late signed contribution reward actually spent",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "late spend accepted by parent",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "late spent output removed",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "late spend remained valid at zero subsidy",
+    "actual": 52661,
+    "expected": 52661,
+    "passed": true
+  }
+]

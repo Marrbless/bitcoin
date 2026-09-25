@@ -686,6 +686,13 @@ public:
             consensus.RdtsExpiryTime = *opts.rdts_expiry_time;
         }
 
+        if (opts.gateway_allocation_height) {
+            if (*opts.gateway_allocation_height < consensus.CSVHeight || *opts.gateway_allocation_height < consensus.SegwitHeight) {
+                throw std::runtime_error("Gateway allocation requires active CSV and Segwit");
+            }
+            consensus.GatewayAllocationHeight = *opts.gateway_allocation_height;
+        }
+
         if (opts.coinbase_maturity_long_start_height) {
             consensus.CoinbaseMaturityLongStartHeight = *opts.coinbase_maturity_long_start_height;
             consensus.CoinbaseMaturityLongEnforceHeight = *opts.coinbase_maturity_long_enforce_height;

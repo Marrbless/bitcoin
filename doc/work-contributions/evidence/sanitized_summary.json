@@ -1,0 +1,32 @@
+{
+  "binaries": {
+    "candidate": "465a573bec62ef5b97da31bb0ee1d33d26614249c7dba964019d4cbbdfb36a33",
+    "parent": "799e20cbece486dab448f00ac3702de734edb2121fe37b7256613cb001217b9b"
+  },
+  "suites": [
+    {
+      "suite": "test_blake.py",
+      "returncode": 0,
+      "checks": 127,
+      "passed": true
+    },
+    {
+      "suite": "test_sha_boundary.py",
+      "returncode": 0,
+      "checks": 10,
+      "passed": true
+    },
+    {
+      "suite": "test_endpoint_blake.py",
+      "returncode": 0,
+      "checks": 44,
+      "passed": true
+    },
+    {
+      "suite": "test_adversarial.py",
+      "returncode": 0,
+      "checks": 41,
+      "passed": true
+    }
+  ]
+}

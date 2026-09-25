@@ -1,0 +1,37 @@
+{
+  "date": "2026-09-25",
+  "base": "58398baf33e588779685ead478e6397bb28ed3d6",
+  "release_binary_sha256": {
+    "candidate": "5fa953de2441743b6ce9664ed253da3ea0b958ba9ecdeaf2795985297e70726e",
+    "parent": "799e20cbece486dab448f00ac3702de734edb2121fe37b7256613cb001217b9b"
+  },
+  "maturity": {
+    "checks": 36,
+    "passed": true,
+    "final_height": 52661,
+    "candidate_and_parent": true,
+    "helper_sha256": "4efb7a4f4af59c65015e2656033200fbecf0048893a68b065c734f49d30166b1",
+    "note": "Executed before the later shutdown exit-status assertion was added to the helper. Consensus binary unchanged."
+  },
+  "upstream_functional": {
+    "feature_powchange.py": "passed",
+    "mining_basic.py": "passed"
+  },
+  "leak_sanitizer": {
+    "status": "blocked",
+    "reason": "LeakSanitizer fatal runtime error: does not work under ptrace",
+    "not_a_passing_leak_check": true
+  },
+  "earlier_fixture_corrections": [
+    "Built the required bitcoin-cli before rerunning upstream functional tests.",
+    "After restart, proposal helper now resolves the current node instead of retaining the stopped RPC connection.",
+    "Harness now checks process exit status, exposing unsupported LeakSanitizer execution."
+  ],
+  "sanitizers": {
+    "address": "passed",
+    "undefined_behavior": "passed",
+    "leak_detection": false,
+    "random_certificates": 10000,
+    "summary": "sanitized_summary.json"
+  }
+}

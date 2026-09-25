@@ -1,0 +1,140 @@
+[
+  {
+    "name": "funding block accepted",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "valid control",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "valid control parent compatibility",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "aggregated recipient outputs accepted",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "split identical recipient output accepted",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "early lock shortened rejected by proposal",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "early lock shortened allowed by parent",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "finder key substituted rejected by proposal",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "finder key substituted allowed by parent",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "one sat redirected rejected by proposal",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "one sat redirected allowed by parent",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "assigned reward underclaimed rejected by proposal",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "assigned reward underclaimed allowed by parent",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "finder metadata duplicated rejected by proposal",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "finder metadata duplicated allowed by parent",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "all certificate truncations rejected",
+    "actual": 336,
+    "expected": 336,
+    "passed": true
+  },
+  {
+    "name": "bounded random certificate corpus rejected",
+    "actual": 256,
+    "expected": 256,
+    "passed": true
+  },
+  {
+    "name": "reused work with changed early recipient rejected",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "reused work with changed late recipient rejected",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "reused work with changed transaction rejected",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "reused work with changed locktime rejected",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "poisoned batch has no accepted proofs",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "hostile validation batch is rate limited",
+    "actual": false,
+    "expected": true,
+    "passed": false
+  }
+]

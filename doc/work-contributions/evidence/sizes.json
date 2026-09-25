@@ -1,0 +1,7 @@
+{
+  "certificate_bytes": 336,
+  "nineteen_proof_block_bytes": 10521,
+  "coinbase_bytes": 10262,
+  "proof_fragments": 90,
+  "max_output_script_bytes": 83
+}

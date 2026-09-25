@@ -1,0 +1,422 @@
+[
+  {
+    "name": "funding accepted",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "parent and candidate tips agree",
+    "actual": "034b5c37be1ec2c72c0322c425c16d5ed663bbc8e8e6c7544afc9efd3a8b6701",
+    "expected": "034b5c37be1ec2c72c0322c425c16d5ed663bbc8e8e6c7544afc9efd3a8b6701",
+    "passed": true
+  },
+  {
+    "name": "candidate uses inherited BLAKE header",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "header commits exact tagged terms",
+    "actual": "20be89a757d994a6ffc2e99cee54aaa5629a433d99d9b79110eb760d68f3ddce",
+    "expected": "20be89a757d994a6ffc2e99cee54aaa5629a433d99d9b79110eb760d68f3ddce",
+    "passed": true
+  },
+  {
+    "name": "source no longer has padded coinbase commitment",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "all source data outputs within83",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "profile 0 fixed certificate size",
+    "actual": 263,
+    "expected": 263,
+    "passed": true
+  },
+  {
+    "name": "profile 0 contribution accepted",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "profile 0 parent accepts settlement",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "profile 1 fixed certificate size",
+    "actual": 263,
+    "expected": 263,
+    "passed": true
+  },
+  {
+    "name": "profile 1 contribution accepted",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "profile 1 parent accepts settlement",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "profile 2 fixed certificate size",
+    "actual": 263,
+    "expected": 263,
+    "passed": true
+  },
+  {
+    "name": "profile 2 contribution accepted",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "profile 2 parent accepts settlement",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "profile 3 fixed certificate size",
+    "actual": 263,
+    "expected": 263,
+    "passed": true
+  },
+  {
+    "name": "profile 3 contribution accepted",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "profile 3 parent accepts settlement",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "coinbase variation 0 keeps size",
+    "actual": 263,
+    "expected": 263,
+    "passed": true
+  },
+  {
+    "name": "coinbase variation 0 accepted",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "coinbase variation 1 keeps size",
+    "actual": 263,
+    "expected": 263,
+    "passed": true
+  },
+  {
+    "name": "coinbase variation 1 accepted",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "coinbase variation 31 keeps size",
+    "actual": 263,
+    "expected": 263,
+    "passed": true
+  },
+  {
+    "name": "coinbase variation 31 accepted",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "coinbase variation 63 keeps size",
+    "actual": 263,
+    "expected": 263,
+    "passed": true
+  },
+  {
+    "name": "coinbase variation 63 accepted",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "nineteen proofs accepted",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "nineteen proof settlement parent compatible",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "maximum evidence uses70 fragments",
+    "actual": 70,
+    "expected": 70,
+    "passed": true
+  },
+  {
+    "name": "maximum evidence body4998 bytes",
+    "actual": 4998,
+    "expected": 4998,
+    "passed": true
+  },
+  {
+    "name": "maximum output script83 bytes",
+    "actual": 83,
+    "expected": 83,
+    "passed": true
+  },
+  {
+    "name": "twentieth proof rejected",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "duplicate proof rejected",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "full inventory reward including fees",
+    "actual": 5000001000,
+    "expected": 5000001000,
+    "passed": true
+  },
+  {
+    "name": "one proof uses4 fragments",
+    "actual": 4,
+    "expected": 4,
+    "passed": true
+  },
+  {
+    "name": "missing fragment rejected",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "duplicate fragment rejected",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "noncontiguous fragments rejected",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "wrong payout rejected",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "oversize return rejected",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "reordered rejected",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "zero count rejected",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "oversized count rejected",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "short nonfinal rejected",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "extra final byte rejected",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "legacy carrier rejected",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "changed version rejected",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "changed parent rejected",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "changed bits rejected",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "changed height rejected",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "changed hook rejected",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "changed X rejected",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "changed early key rejected",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "changed late key rejected",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "fresh work with invalid height rejected",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "fresh work with invalid reserved flags rejected",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "fresh work with invalid past time rejected",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "truncated certificate rejected",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "trailing certificate rejected",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "old version certificate rejected",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "legacy header certificate rejected",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "full block result cannot be paid as weak",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "missing X control valid for parent",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "missing X specifically rejected",
+    "actual": "n5-missing-x",
+    "expected": "n5-missing-x",
+    "passed": true
+  },
+  {
+    "name": "actual settlement accepted",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "actual settlement parent accepted",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "settled tips agree",
+    "actual": "0a6bec3a320240f498350ee6b81381db34192e44b2f3342a78fa80936b90a0fe",
+    "expected": "0a6bec3a320240f498350ee6b81381db34192e44b2f3342a78fa80936b90a0fe",
+    "passed": true
+  },
+  {
+    "name": "old parent proof expires",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "proof eligible on restored parent",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "settlement restored",
+    "actual": "0a6bec3a320240f498350ee6b81381db34192e44b2f3342a78fa80936b90a0fe",
+    "expected": "0a6bec3a320240f498350ee6b81381db34192e44b2f3342a78fa80936b90a0fe",
+    "passed": true
+  }
+]

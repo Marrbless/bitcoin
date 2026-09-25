@@ -55,6 +55,7 @@
 #include <node/chainstate.h>
 #include <node/chainstatemanager_args.h>
 #include <node/context.h>
+#include <node/native_stratum.h>
 #include <node/interface_ui.h>
 #include <node/kernel_notifications.h>
 #include <node/mempool_args.h>
@@ -276,6 +277,7 @@ static void ShutdownNotify(const ArgsManager& args)
 
 void Interrupt(NodeContext& node)
 {
+    StopNativeStratum();
 #if HAVE_SYSTEM
     ShutdownNotify(*node.args);
 #endif

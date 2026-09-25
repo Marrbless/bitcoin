@@ -10,8 +10,13 @@
 #include <chainparamsbase.h>
 #include <clientversion.h>
 #include <common/system.h>
+#include <common/args.h>
 #include <consensus/amount.h>
 #include <consensus/consensus.h>
+#include <consensus/gateway_allocation.h>
+#include <consensus/node_contribution.h>
+#include <consensus/tx_check.h>
+#include <coins.h>
 #include <consensus/merkle.h>
 #include <consensus/params.h>
 #include <consensus/validation.h>
@@ -23,6 +28,7 @@
 #include <net.h>
 #include <node/context.h>
 #include <node/miner.h>
+#include <node/native_stratum.h>
 #include <node/warnings.h>
 #include <policy/ephemeral_policy.h>
 #include <pow.h>
@@ -414,6 +420,101 @@ static RPCHelpMan generateblock()
     };
 }
 
+// Private-regtest candidate assembly for work-bound contributions.
+static RPCHelpMan getcontributionblock()
+{
+    return RPCHelpMan{"getcontributionblock",
+        "Experimental regtest-only native contribution candidate assembly. Does not mine or submit a block.",
+        {
+            {"transactions", RPCArg::Type::ARR, RPCArg::Optional::NO, "Ordered raw transactions",
+                {{"rawtx", RPCArg::Type::STR_HEX, RPCArg::Optional::OMITTED, ""}}},
+            {"proofs", RPCArg::Type::ARR, RPCArg::Optional::NO, "Bounded raw contribution certificates",
+                {{"proof", RPCArg::Type::STR_HEX, RPCArg::Optional::OMITTED, ""}}},
+            {"x", RPCArg::Type::STR, RPCArg::Default{""}, "Optional txid to commit for this node's own work"},
+        },
+        RPCResult{RPCResult::Type::OBJ,"","",{
+            {RPCResult::Type::STR_HEX,"hex","Unsolved native candidate block"},
+            {RPCResult::Type::NUM,"proofs","Included contribution count"},
+            {RPCResult::Type::NUM,"budget","Maximum subsidy plus actual transaction fees in sats"},
+            {RPCResult::Type::STR_HEX,"candidateproof",true,"Unsolved candidate certificate; valid work is still required"},
+        }},
+        RPCExamples{""},
+        [&](const RPCHelpMan& self,const JSONRPCRequest& request)->UniValue {
+            NodeContext& node=EnsureAnyNodeContext(request.context);
+            ChainstateManager& chainman=EnsureChainman(node);
+            if (chainman.GetParams().GetChainType()!=ChainType::REGTEST) throw JSONRPCError(RPC_INVALID_PARAMETER,"Contributions are regtest-only");
+            std::vector<CTransactionRef> txs;
+            std::vector<std::vector<unsigned char>> proofs;
+            size_t bytes=0;
+            for(const auto& value:request.params[0].get_array().getValues()) {
+                const auto raw=value.get_str(); bytes+=raw.size();
+                if(bytes>600000 || txs.size()>=4095) throw JSONRPCError(RPC_INVALID_PARAMETER,"Transaction batch too large");
+                CMutableTransaction tx;
+                if(!DecodeHexTx(tx,raw)) throw JSONRPCError(RPC_DESERIALIZATION_ERROR,"Transaction decode failed");
+                txs.push_back(MakeTransactionRef(std::move(tx)));
+            }
+            for(const auto& value:request.params[1].get_array().getValues()) {
+                const auto raw=value.get_str();
+                if(proofs.size()>=Consensus::NODE_CONTRIBUTION_CAP || raw.size()>2*Consensus::NODE_CONTRIBUTION_MAX_BYTES || !IsHex(raw)) throw JSONRPCError(RPC_INVALID_PARAMETER,"Invalid proof batch");
+                proofs.push_back(ParseHex(raw));
+            }
+            const auto keys=util::SplitString(node.args->GetArg("-testgatewaykeys",""),':');
+            if(keys.size()!=2) throw JSONRPCError(RPC_INVALID_PARAMETER,"Need contribution public keys");
+            const CPubKey early{ParseHex(keys[0])},late{ParseHex(keys[1])};
+            if(!early.IsCompressed() || !early.IsFullyValid() || !late.IsCompressed() || !late.IsFullyValid()) throw JSONRPCError(RPC_INVALID_PARAMETER,"Invalid contribution keys");
+            LOCK(chainman.GetMutex());
+            auto& chainstate=chainman.ActiveChainstate();
+            CBlockIndex* parent=chainstate.m_chain.Tip();
+            if(!chainman.GetConsensus().MiningContributionsActiveAt(parent->nHeight+1)) throw JSONRPCError(RPC_INVALID_PARAMETER,"Contributions not active");
+            CCoinsViewCache view{&chainstate.CoinsTip()};
+            CAmount fees=0;
+            for(const auto& tx:txs) {
+                TxValidationState state;
+                if(tx->IsCoinBase() || !CheckTransaction(*tx,state)) throw JSONRPCError(RPC_VERIFY_ERROR,"Invalid transaction structure");
+                CAmount input=0;
+                for(const auto& vin:tx->vin) {
+                    const auto& coin=view.AccessCoin(vin.prevout);
+                    if(coin.IsSpent()) throw JSONRPCError(RPC_VERIFY_ERROR,"Missing input");
+                    input+=coin.out.nValue;
+                    if(!MoneyRange(input)) throw JSONRPCError(RPC_VERIFY_ERROR,"Input range");
+                }
+                const CAmount fee=input-tx->GetValueOut();
+                if(!MoneyRange(fee) || !MoneyRange(fees+fee)) throw JSONRPCError(RPC_VERIFY_ERROR,"Fee range");
+                fees+=fee;
+                for(const auto& vin:tx->vin) view.SpendCoin(vin.prevout);
+                AddCoins(view,*tx,parent->nHeight+1);
+            }
+            auto templ=EnsureMining(node).createNewBlock({.use_mempool=false,.coinbase_output_script=CScript{}<<OP_TRUE});
+            CHECK_NONFATAL(templ);
+            CBlock block=templ->getBlock();
+            block.vtx.insert(block.vtx.end(),txs.begin(),txs.end());
+            const CAmount budget=GetBlockSubsidy(parent->nHeight+1,chainman.GetConsensus())+fees;
+            CMutableTransaction cb{*block.vtx[0]};
+            try { cb.vout=Consensus::NodeContributionOutputs(budget,early,late,proofs); }
+            catch(const std::exception& e) { throw JSONRPCError(RPC_INVALID_PARAMETER,e.what()); }
+            std::optional<uint256> own_x;
+            if(!request.params[2].isNull() && !request.params[2].get_str().empty()) {
+                const auto x=uint256::FromHex(request.params[2].get_str());
+                bool found=false;
+                for(const auto& tx:txs) if(x && tx->GetHash().ToUint256()==*x) found=true;
+                if(!found) throw JSONRPCError(RPC_INVALID_PARAMETER,"Committed X absent from candidate");
+                own_x = x;
+                block.m_mm_rhs = Consensus::NodeContributionCommitment(*x, early, late);
+            }
+            block.vtx[0]=MakeTransactionRef(std::move(cb));
+            chainman.GenerateCoinbaseCommitment(block,parent);
+            block.m_txcount=block.m_header_v2?block.vtx.size():0;
+            block.hashMerkleRoot=BlockMerkleRoot(block);
+            BlockValidationState state;
+            if(!TestBlockValidity(state,chainman.GetParams(),chainstate,block,parent,false,true)) throw JSONRPCError(RPC_VERIFY_ERROR,state.ToString());
+            DataStream stream; stream<<TX_WITH_WITNESS(block);
+            UniValue result(UniValue::VOBJ);
+            result.pushKV("hex",HexStr(stream)); result.pushKV("proofs",static_cast<int>(proofs.size())); result.pushKV("budget",budget);
+            if(own_x)result.pushKV("candidateproof",HexStr(Consensus::EncodeNodeContribution(block,*own_x,early,late)));
+            return result;
+        }};
+}
+
 static RPCHelpMan getmininginfo()
 {
     return RPCHelpMan{"getmininginfo",
@@ -696,6 +797,20 @@ static RPCHelpMan getblocktemplate()
                     {RPCResult::Type::STR_HEX, "key", "values must be in the coinbase (keys may be ignored)"},
                 }},
                 {RPCResult::Type::NUM, "coinbasevalue", "maximum allowable input to coinbase transaction, including the generation award and transaction fees (in satoshis)"},
+                {RPCResult::Type::OBJ, "gatewayallocation", /*optional=*/true, "Experimental allocation construction data",
+                {
+                    {RPCResult::Type::NUM, "gateway_bps", "Gateway allocation in basis points"},
+                    {RPCResult::Type::NUM, "gateway_depth", "Gateway relative block delay"},
+                    {RPCResult::Type::NUM, "hasher_depth", "Hasher relative block delay"},
+                    {RPCResult::Type::ARR, "outputs", "Required outputs for this template, including its witness commitment",
+                    {
+                        {RPCResult::Type::OBJ, "", "Output",
+                        {
+                            {RPCResult::Type::NUM, "value", "Value in satoshis"},
+                            {RPCResult::Type::STR_HEX, "scriptpubkey", "Output script"},
+                        }},
+                    }},
+                }},
                 {RPCResult::Type::STR, "longpollid", "an id to include with a request to longpoll on an update to this template"},
                 {RPCResult::Type::STR, "target", "The hash target"},
                 {RPCResult::Type::NUM_TIME, "mintime", "The minimum timestamp appropriate for the next block time, expressed in " + UNIX_EPOCH_TIME + ". Adjusted for the proposed BIP94 timewarp rule."},
@@ -1088,6 +1203,27 @@ static UniValue TemplateToJSON(const Consensus::Params& consensusParams, const C
         aRules.push_back("long_coinbase_maturity");
     }
 
+    if (pindexPrev != nullptr && consensusParams.MiningContributionsActiveAt(pindexPrev->nHeight + 1)) {
+        if (setClientRules.find("gatewayallocation") == setClientRules.end()) {
+            throw JSONRPCError(RPC_INVALID_PARAMETER, "Support for 'gatewayallocation' rule requires explicit client support");
+        }
+        aRules.push_back("!gatewayallocation");
+        if (!setClientRules.count("nodecontributions")) throw JSONRPCError(RPC_INVALID_PARAMETER, "Requires explicit nodecontributions support");
+        aRules.push_back("!nodecontributions");
+        UniValue allocation(UniValue::VOBJ), outputs(UniValue::VARR);
+        allocation.pushKV("gateway_bps", Consensus::GATEWAY_ALLOCATION_BPS);
+        allocation.pushKV("gateway_depth", Consensus::GATEWAY_ALLOCATION_DEPTH);
+        allocation.pushKV("hasher_depth", Consensus::HASHER_ALLOCATION_DEPTH);
+        for (const auto& out : block.vtx[0]->vout) {
+            UniValue entry(UniValue::VOBJ);
+            entry.pushKV("value", out.nValue);
+            entry.pushKV("scriptpubkey", HexStr(out.scriptPubKey));
+            outputs.push_back(std::move(entry));
+        }
+        allocation.pushKV("outputs", std::move(outputs));
+        result.pushKV("gatewayallocation", std::move(allocation));
+    }
+
     result.pushKV("version", block_header.GetCompleteVersion());
     result.pushKV("rules", std::move(aRules));
     result.pushKV("vbavailable", std::move(vbavailable));
@@ -1096,7 +1232,7 @@ static UniValue TemplateToJSON(const Consensus::Params& consensusParams, const C
     result.pushKV("previousblockhash", block.hashPrevBlock.GetHex());
     result.pushKV("transactions", std::move(transactions));
     result.pushKV("coinbaseaux", std::move(aux));
-    result.pushKV("coinbasevalue", (int64_t)block.vtx[0]->vout[0].nValue);
+    result.pushKV("coinbasevalue", block.vtx[0]->GetValueOut());
     result.pushKV("longpollid", pindexPrev->GetBlockHash().GetHex() + ToString(nTransactionsUpdatedLast));
     result.pushKV("target", hashTarget.GetHex());
     result.pushKV("mintime", GetMinimumTime(pindexPrev, consensusParams.DifficultyAdjustmentInterval()));
@@ -1242,9 +1378,11 @@ static RPCHelpMan submitheader()
 
 void RegisterMiningRPCCommands(CRPCTable& t)
 {
+    RegisterNativeStratumRPC(t);
     static const CRPCCommand commands[]{
         {"mining", &getnetworkhashps},
         {"mining", &getmininginfo},
+        {"hidden", &getcontributionblock},
         {"mining", &prioritisetransaction},
         {"mining", &getprioritisedtransactions},
         {"mining", &getblocktemplate},

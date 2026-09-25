@@ -1,0 +1,266 @@
+[
+  {
+    "name": "funding",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "BLAKE coinb1 is39 bytes",
+    "actual": 39,
+    "expected": 39,
+    "passed": true
+  },
+  {
+    "name": "BLAKE has empty coinb2",
+    "actual": "",
+    "expected": "",
+    "passed": true
+  },
+  {
+    "name": "BLAKE no Bitcoin merkle branch",
+    "actual": [],
+    "expected": [],
+    "passed": true
+  },
+  {
+    "name": "BLAKE notification time is8 bytes",
+    "actual": 8,
+    "expected": 8,
+    "passed": true
+  },
+  {
+    "name": "reject invalid submit field 2 00000000",
+    "actual": false,
+    "expected": false,
+    "passed": true
+  },
+  {
+    "name": "reject invalid submit field 2 gggggggggggggggg",
+    "actual": false,
+    "expected": false,
+    "passed": true
+  },
+  {
+    "name": "reject invalid submit field 3 123",
+    "actual": false,
+    "expected": false,
+    "passed": true
+  },
+  {
+    "name": "reject invalid submit field 3 zzzzzzzzzzzzzzzz",
+    "actual": false,
+    "expected": false,
+    "passed": true
+  },
+  {
+    "name": "reject invalid submit field 4 000000000000000000000000",
+    "actual": false,
+    "expected": false,
+    "passed": true
+  },
+  {
+    "name": "reject invalid submit field 4 zzzzzzzzzzzzzzzz",
+    "actual": false,
+    "expected": false,
+    "passed": true
+  },
+  {
+    "name": "reject invalid submit field 0 wrong.worker",
+    "actual": false,
+    "expected": false,
+    "passed": true
+  },
+  {
+    "name": "reject invalid submit field 1 unknown-job",
+    "actual": false,
+    "expected": false,
+    "passed": true
+  },
+  {
+    "name": "long-form strong submission",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "socket work equals native certificate hash",
+    "actual": "e9e30fdda236e457592a7a75ff3d6b8376bc021c1448a86dd431a1c191f96a3a",
+    "expected": "e9e30fdda236e457592a7a75ff3d6b8376bc021c1448a86dd431a1c191f96a3a",
+    "passed": true
+  },
+  {
+    "name": "native nonce2 matches Sia high word",
+    "actual": 2271560481,
+    "expected": 2271560481,
+    "passed": true
+  },
+  {
+    "name": "native time offset matches Sia low word",
+    "actual": 20,
+    "expected": 20,
+    "passed": true
+  },
+  {
+    "name": "native nonce3 matches Sia time high word",
+    "actual": 305419896,
+    "expected": 305419896,
+    "passed": true
+  },
+  {
+    "name": "fixed consensus time despite grinding words",
+    "actual": 1296748619,
+    "expected": 1296748619,
+    "passed": true
+  },
+  {
+    "name": "shared commitment equals independent Python",
+    "actual": "6374c49ef39bbfb0dec68f18672d0a653b87f4e8f7707526e4415bc65893c640",
+    "expected": "6374c49ef39bbfb0dec68f18672d0a653b87f4e8f7707526e4415bc65893c640",
+    "passed": true
+  },
+  {
+    "name": "header extranonce matches assigned bytes",
+    "actual": "00000000000000010300000000000000",
+    "expected": "00000000000000010300000000000000",
+    "passed": true
+  },
+  {
+    "name": "exact proof retry ACK",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "retry has no duplicate credit",
+    "actual": 1,
+    "expected": 1,
+    "passed": true
+  },
+  {
+    "name": "same header changed certificate rejected",
+    "actual": false,
+    "expected": false,
+    "passed": true
+  },
+  {
+    "name": "short-form nonce/time accepted",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "two independently earned proofs present",
+    "actual": 2,
+    "expected": 2,
+    "passed": true
+  },
+  {
+    "name": "short nonce high word zero",
+    "actual": 0,
+    "expected": 0,
+    "passed": true
+  },
+  {
+    "name": "short time high word zero",
+    "actual": 0,
+    "expected": 0,
+    "passed": true
+  },
+  {
+    "name": "19 proof inbox reached",
+    "actual": 19,
+    "expected": 19,
+    "passed": true
+  },
+  {
+    "name": "20th strong rejected",
+    "actual": false,
+    "expected": false,
+    "passed": true
+  },
+  {
+    "name": "full block accepted at strong cap",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "socket blockhash matches node tip",
+    "actual": "400990ec0b0a804e89ebd152995fc6b9db831c92ff995c2e580e4432a55a9b20",
+    "expected": "400990ec0b0a804e89ebd152995fc6b9db831c92ff995c2e580e4432a55a9b20",
+    "passed": true
+  },
+  {
+    "name": "all native nodes and parent agree",
+    "actual": 1,
+    "expected": 1,
+    "passed": true
+  },
+  {
+    "name": "block includes both node selections",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "all coinbase scripts within83",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "block at cap claims full slots incl fees",
+    "actual": 5000002000,
+    "expected": 5000002000,
+    "passed": true
+  },
+  {
+    "name": "old-parent job rejected",
+    "actual": false,
+    "expected": false,
+    "passed": true
+  },
+  {
+    "name": "4096 ordinary accounted",
+    "actual": 4096,
+    "expected": 4096,
+    "passed": true
+  },
+  {
+    "name": "ordinary overflow rejected",
+    "actual": false,
+    "expected": false,
+    "passed": true
+  },
+  {
+    "name": "block accepted after ordinary saturation",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "post-saturation chain agreement",
+    "actual": "75aa510d74452d425bae0b9b189402bc26c794e559241edf37be72a8eb61f28d",
+    "expected": "75aa510d74452d425bae0b9b189402bc26c794e559241edf37be72a8eb61f28d",
+    "passed": true
+  },
+  {
+    "name": "endpoint remains healthy after local selection",
+    "actual": "",
+    "expected": "",
+    "passed": true
+  },
+  {
+    "name": "local mempool X earns strong proof",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "native selection commits local txid",
+    "actual": "6911fd74e52e0ad6af926932861b37d2b78d74a867687d2b19e05d69fb70515f",
+    "expected": "6911fd74e52e0ad6af926932861b37d2b78d74a867687d2b19e05d69fb70515f",
+    "passed": true
+  }
+]

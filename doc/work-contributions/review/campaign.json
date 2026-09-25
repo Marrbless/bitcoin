@@ -1,0 +1,20 @@
+{
+  "reviewed_commit": "93e1f3cf27297925637073c65aea49a5e3b2a97d",
+  "consensus_changed": false,
+  "release_binary_sha256": "5fa953de2441743b6ce9664ed253da3ea0b958ba9ecdeaf2795985297e70726e",
+  "parent_binary_sha256": "799e20cbece486dab448f00ac3702de734edb2121fe37b7256613cb001217b9b",
+  "sanitized_binary_sha256": "465a573bec62ef5b97da31bb0ee1d33d26614249c7dba964019d4cbbdfb36a33",
+  "release_native_review_checks": 54,
+  "sanitized_native_review_checks": 54,
+  "release_maturity_overlap_checks": 16,
+  "leak_detection": false,
+  "model_intervals": 1000000,
+  "sources": {
+    "test/functional/work_contributions/test_review.py": "742e212e5b600fc5e2e7c757e026ef1206bb83ac607ebc49a64ac158227c4dba",
+    "test/functional/work_contributions/test_maturity_overlap.py": "4500e5341076023f9cd1f18bb7e2d858b02420ebd353457823da1582b13d2b66",
+    "test/functional/work_contributions/review_economics.py": "79944ea374679b94704da4f00616e541987fe7c4311ca530220ffab5bf6f5d3c",
+    "test/functional/work_contributions/native_checks.py": "379267888d394875bc4110513b5d5da9d7919ab44775a019e7456a859218e1bc",
+    "test/functional/work_contributions/test_blake.py": "1485c2c5c441092da7801b636c14934347e084cff59f0f645b54c7624cad8c69",
+    "test/functional/work_contributions/test_maturity.py": "8ac3587776b2bee458c3a5ca07671f92e02464875ab4b01489edfbaf8efa78a6"
+  }
+}
