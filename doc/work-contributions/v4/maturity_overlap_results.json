@@ -1,0 +1,98 @@
+[
+  {
+    "name": "nodes agree at height 201",
+    "actual": "245fbb10b3f7f8778a51bf180fd598db5a452b8a591a63fef436c1d0b00a565e",
+    "expected": "245fbb10b3f7f8778a51bf180fd598db5a452b8a591a63fef436c1d0b00a565e",
+    "passed": true
+  },
+  {
+    "name": "nodes agree at height 6680",
+    "actual": "7953d24242e7d693ba53c9645a90c93e14f012e9f60c10f6ce3d25df0721b312",
+    "expected": "7953d24242e7d693ba53c9645a90c93e14f012e9f60c10f6ce3d25df0721b312",
+    "passed": true
+  },
+  {
+    "name": "candidate inherited maturity blocks CSV eligible spend at 6681",
+    "actual": "bad-txns-premature-spend-of-coinbase",
+    "expected": "bad-txns-premature-spend-of-coinbase",
+    "passed": true
+  },
+  {
+    "name": "parent inherited maturity blocks CSV eligible spend at 6681",
+    "actual": "bad-txns-premature-spend-of-coinbase",
+    "expected": "bad-txns-premature-spend-of-coinbase",
+    "passed": true
+  },
+  {
+    "name": "nodes agree at height 7099",
+    "actual": "43f4a3c153720330c4d629e5789c6719b428d9b5a4805df5f84637c78f4bd2f9",
+    "expected": "43f4a3c153720330c4d629e5789c6719b428d9b5a4805df5f84637c78f4bd2f9",
+    "passed": true
+  },
+  {
+    "name": "candidate inherited maturity blocks CSV eligible spend at 7100",
+    "actual": "bad-txns-premature-spend-of-coinbase",
+    "expected": "bad-txns-premature-spend-of-coinbase",
+    "passed": true
+  },
+  {
+    "name": "parent inherited maturity blocks CSV eligible spend at 7100",
+    "actual": "bad-txns-premature-spend-of-coinbase",
+    "expected": "bad-txns-premature-spend-of-coinbase",
+    "passed": true
+  },
+  {
+    "name": "nodes agree at height 7100",
+    "actual": "074b8646b44f30aa28ddefe872946aea93966f08faef467a8a3f060bd06486f0",
+    "expected": "074b8646b44f30aa28ddefe872946aea93966f08faef467a8a3f060bd06486f0",
+    "passed": true
+  },
+  {
+    "name": "candidate accepts signed spend at inherited release",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "candidate connects release spend",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "parent accepts signed spend at inherited release",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "parent connects release spend",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "release spend is below unreleased long depth",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "reorg crosses inherited release boundary",
+    "actual": 7099,
+    "expected": 7099,
+    "passed": true
+  },
+  {
+    "name": "candidate restores inherited lock after reorg",
+    "actual": "bad-txns-premature-spend-of-coinbase",
+    "expected": "bad-txns-premature-spend-of-coinbase",
+    "passed": true
+  },
+  {
+    "name": "parent restores inherited lock after reorg",
+    "actual": "bad-txns-premature-spend-of-coinbase",
+    "expected": "bad-txns-premature-spend-of-coinbase",
+    "passed": true
+  }
+]

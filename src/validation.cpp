@@ -3111,7 +3111,7 @@ bool Chainstate::ConnectBlock(const CBlock& block, BlockValidationState& state, 
                       strprintf("coinbase pays too much (actual=%d vs limit=%d)", block.vtx[0]->GetValueOut(), blockReward));
     }
 
-    if (state.IsValid() && pindex->nHeight >= params.GetConsensus().GatewayAllocationHeight) {
+    if (state.IsValid() && params.GetConsensus().MiningContributionsActiveAt(pindex->nHeight)) {
         Consensus::CheckNodeContributions(block, pindex->pprev, params.GetConsensus(), blockReward, state);
     }
 

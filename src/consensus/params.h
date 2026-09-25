@@ -155,6 +155,10 @@ struct Params {
     int64_t RdtsExpiryTime{std::numeric_limits<int64_t>::min()};
     // Experimental allocation deployment; enabled only by explicit regtest args.
     int GatewayAllocationHeight{std::numeric_limits<int>::max()};
+    bool MiningContributionsActiveAt(int height) const
+    {
+        return height >= GatewayAllocationHeight && IsBlake2bHeight(height);
+    }
     int CoinbaseMaturityLong{COINBASE_MATURITY};
     int CoinbaseMaturityLongStartHeight{std::numeric_limits<int>::max()};
     int CoinbaseMaturityLongEnforceHeight{std::numeric_limits<int>::max()};

@@ -2,7 +2,7 @@
 # Distributed under the MIT software license, see the accompanying COPYING.
 """Review experiments: inherited header commitment and marginal fee allocation.
 
-The proposed smaller certificate is only modeled here; v3 remains consensus.
+The inherited header hook is the v4 contribution commitment.
 """
 import copy
 import hashlib
@@ -23,7 +23,7 @@ def check(name, actual, expected=True):
         raise AssertionError(item)
 
 def terms(x, early, late):
-    tag = hashlib.sha256(b'Mining contribution terms v4 experiment').digest()
+    tag = hashlib.sha256(b'Bitcoin mining contribution v4').digest()
     return hashlib.sha256(tag + tag + x + early + late).digest()
 
 def main():

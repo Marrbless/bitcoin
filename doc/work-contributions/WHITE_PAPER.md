@@ -2,7 +2,7 @@
 
 Marrbless
 
-Proposal draft 0.5
+Proposal draft 0.6
 
 25 September 2026
 
@@ -86,15 +86,17 @@ The reward split, delays, target multiplier and slot count are experimental para
 
 ## 5. Proof representation
 
-A certificate contains the inherited source header, a source coinbase length, an aligned SHA256 midstate, a Merkle branch, X, the two reward keys and the source coinbase locktime. The current certificate version is 3.
+A certificate contains a version byte, the inherited 164 byte BLAKE2b header, X and two compressed public keys. Version 4 is exactly 263 bytes. There is no imported SHA state, source coinbase reconstruction or Merkle branch.
 
-For the inherited BLAKE2b header, certificate size is 304 plus 32 times the branch depth in bytes. Depth is bounded by twelve, giving a maximum of 688 bytes. The claimed source transaction count is between one and 4,096, with a matching branch depth.
+The source header has an existing 32 byte commitment field. We place a tagged hash of X and both reward keys in that field. The work commits these terms through the inherited header hash. The node checks the commitment before crediting the proof.
 
-The construction resumes hashing a known suffix that commits the transaction and keys. The resulting leaf and branch must reconstruct the source header's Merkle root. This proves a contextual work commitment under the construction's binding assumptions. It does not establish that the omitted source block was valid, that its hidden prefix existed, or that X appeared in it. The settling block provides the transaction validity check. Independent review of the arbitrary midstate construction is required.
+This proves contextual work bound to terms. It does not establish that the omitted source block was valid or that X appeared in it. The settling block provides the transaction validity check. Historical SHA blocks remain subject to the inherited rules; new contribution mining requires BLAKE2b.
 
-Settlement evidence is divided among consecutive coinbase outputs. Every OP_RETURN script is at most 83 bytes, including push opcodes. The complete evidence body may occupy up to 13,111 bytes in 183 fragments. Thus the limit applies to each script, not to the complete proof. The [specification](SPECIFICATION.md) defines the encoding and rejection rules.
+Using this field directly means contributed work cannot simultaneously place an unrelated merge mining commitment there. We accept that limitation in this draft to avoid adding another proof branch.
 
-This format reuses existing coinbase outputs and the inherited header and hash algorithm. It does not create another blockchain or change the work needed to find a full block.
+Settlement evidence is divided among consecutive coinbase outputs. Every OP_RETURN script is at most 83 bytes, including push opcodes. The complete evidence body is at most 4,998 bytes in 70 fragments. The limit applies to each script, not to the complete certificate. The [specification](SPECIFICATION.md) defines the encoding and rejection rules.
+
+This format reuses the inherited header and hash algorithm. It does not create another blockchain or change the work needed to find a full block.
 
 ## 6. Incentives
 
@@ -102,7 +104,11 @@ A finder with an empty slot can earn a fee by crediting a compatible contributio
 
 Empty slots also arise without exclusion. Under independent work, complete immediate relay, compatible transactions and a fixed reward budget, the current multiplier and cap pay an average of 64.15% of the budget. The remaining 35.85% is unclaimed. The average of nineteen weak results does not mean nineteen arrive before each full block. Short intervals leave empty slots and long intervals cannot carry excess shares forward. The [system review](SYSTEM_REVIEW.md) gives the derivation and a reproducible model. Unclaimed rewards therefore cannot by themselves measure censorship or failure to run nodes.
 
-Sharing transaction fees introduces another tradeoff. With nineteen contributions owned by others, the finder receives 9.75% of an additional fee. Direct compensation to the finder can avoid that redistribution and these coinbase locks. This creates a reason to compare sharing subsidy alone with sharing subsidy plus fees before choosing the reward basis. The implemented basis has not changed.
+Sharing transaction fees introduces another tradeoff. With nineteen contributions owned by others, the finder receives 9.75% of an additional fee. Direct compensation to the finder can avoid that redistribution and these coinbase locks. Giving all transaction fees to the finder preserves its marginal fee incentive, but removes fee funded contributions when the subsidy ends. Sharing one quarter of fees is an intermediate comparison: at full foreign slots the finder keeps 77.4375% of an added fee. It adds another parameter without eliminating either concern. The [design comparison](DESIGN_CHOICES.md) holds the other rules constant. The implementation still shares subsidy plus fees.
+
+![The fixed proof is smaller, fee policies change finder incentives, and more frequent shares fill more slots](../ContributionChoices.png)
+
+*Figure 3. The fee comparison assumes nineteen contributions owned by other miners. The slot results are ideal analytic benchmarks, not live network measurements.*
 
 The comparison changes when slots are full. A finder may already possess qualifying work that pays its own group. Selecting that work need not require new equipment or additional hashing at the time of selection. Transaction size, fees and conflicts also affect the decision. We therefore do not claim a fixed cost for every act of exclusion.
 
@@ -110,7 +116,7 @@ A miner running its own node can choose X and control both reward keys. An exter
 
 Longer locks increase the capital required to advance immature rewards. They also delay receipts for miners running their own nodes. They do not make a continuing reserve impossible once older rewards begin to mature. The claim that any split eliminates delegation profits is therefore not established.
 
-Capital costs apply to independent miners as well as services. Longer locks may favor operators with cheaper financing. They should be evaluated alongside the split and slot rules, rather than treated as a penalty that only external gateways bear.
+Capital costs apply to independent miners as well as services. Longer locks may favor operators with cheaper financing. We therefore recommend inherited maturity as the economic baseline and retain the longer locks as an experiment. The current code still uses the earlier lock values; they are not production recommendations.
 
 The comparison we need holds hashpower, cooperating group size, transaction workload, delivery conditions and payment schedule constant. We then compare the cost of running a node with service fees, financing costs and custody exposure. The value a miner assigns to choosing X should be stated separately. Transactions paying the sender's own keys and repeated Xs remain valid; any recovered fees must be included in the accounting.
 
@@ -120,11 +126,7 @@ The implementation is based on Bitcoin Knots v29.4.2.knots20260508, commit `5839
 
 The node constructs candidates, receives nonce submissions and exchanges contributions with one configured peer. The demonstrated path needs no separate DATUM process. Its Linux endpoint is limited to loopback and serves the Sia style BLAKE2b profile 0. Consensus tests cover all four inherited profiles. This is not an implementation of the DATUM pool protocol and does not establish its withholding protections.
 
-Fresh builds of the candidate and unmodified release passed 222 recorded checks in the default suite: 127 for native BLAKE2b validation, ten for the SHA path and output boundary, 44 for the socket endpoint and 41 adversarial checks. These include proof truncation and mutation, payout redirection, chainstate reindex and a reorganisation across activation. A missing admission limit was reproduced and fixed. These are recorded assertions, not independent security guarantees.
-
-Additional signed maturity, sustained socket and sanitizer results are reported separately in the validation report. The [security review](SECURITY_REVIEW.md) records the remaining attack surface and a possible smaller commitment using an existing BLAKE2b header field. That alternative has not been adopted.
-
-A subsequent review added 70 native checks for marginal fee allocation, precise rejection of a missing X, the inherited header hook and composition with temporary coinbase maturity. The 54 check fee and header suite also passed with address and undefined behavior sanitizers. The header experiment supports investigating a 263 byte certificate, but that format is not implemented as consensus. The current proof remains version 3.
+The fixed proof has been exercised against the unmodified release with all four BLAKE2b profiles. Tests cover commitment changes, all certificate truncations, malformed evidence, exact payouts, the 83 byte limit, parent compatibility and activation across the BLAKE2b boundary. The native endpoint produces and relays the same format. The [validation report](VALIDATION.md) separates current results from earlier format evidence.
 
 The [validation report](VALIDATION.md) contains the evidence and remaining work. Physical ASICs, a public testnet, complete upstream test suites and independent consensus review have not been completed. Earlier parameter simulations are not reproduced by this test runner and do not establish economic adoption.
 
@@ -134,7 +136,7 @@ We have implemented a rule under which a mining contribution can be paid only wh
 
 The implementation is a candidate soft fork relative to the inherited BLAKE2b release. It adds restrictions to valid blocks without granting additional work, issuance or spending permission. Production activation is not proposed here.
 
-The remaining questions include reward utilization, fee incentives, financing costs and whether a simpler proof can enforce the same conditional rule. These decisions affect whether the mechanism makes independent node operation preferable under realistic costs. That economic result has not been demonstrated.
+The remaining questions include reward utilization, fee incentives, financing costs and independent review of the simpler proof. These decisions affect whether the mechanism makes independent node operation preferable under realistic costs. That economic result has not been demonstrated.
 
 ## References
 

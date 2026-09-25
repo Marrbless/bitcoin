@@ -12,13 +12,13 @@ performs actual easy-regtest work. Fixtures use publicly known test-only keys
 
 | Suite | Expected recorded checks | Coverage |
 | --- | ---: | --- |
-| test_blake.py | 127 | Native assembly, profiles, compact codec, malformed evidence, reward checks, old/new acceptance and reorg eligibility |
-| test_sha_boundary.py | 10 | SHA path and explicit 83-byte coinbase output limit outside RDTS |
+| test_blake.py | 70 | Native assembly, profiles, fixed v4 codec, malformed evidence, reward checks, old/new acceptance and reorg eligibility |
+| test_activation_boundary.py | 17 | BLAKE activation, inherited SHA behavior and explicit 83-byte limit outside RDTS |
 | test_endpoint_blake.py | 44 | Socket work reconstruction, bounded relay, actual 19-proof cap, ordinary saturation and full-block priority |
 | test_adversarial.py | 41 | Recipient attacks, all certificate truncations, random malformed corpus, admission limits, chainstate reindex and reorg |
 | test_maturity.py | 36 | Optional real signed early and late reward spends, premature spends and sequence bypass attempts |
 | test_stress.py | 6 | Optional hostile socket traffic with interleaved real block production and RSS sampling |
-| test_review.py | 54 | Optional native fee deltas, precise missing X rejection and inherited header hook experiment |
+| test_review.py | 54 | Optional native fee deltas, precise missing X rejection and inherited header commitment |
 | test_maturity_overlap.py | 16 | Optional inherited temporary maturity restriction, release and reorganisation with CSV rewards |
 
 The default run includes the first four suites. Add `--extended` for the signed
@@ -28,8 +28,7 @@ maturity campaign, which validates more than 52,000 blocks on both nodes. Add
 deterministic random certificates, default 256. These random bytes supplement
 the targeted cases; this is not a coverage guided fuzzer.
 
-Add `--review` to execute both new review suites. The smaller certificate is
-modeled in a test only; v3 remains the implemented consensus format. The
+Add `--review` to execute both new review suites. Version 4 is the implemented fixed 263 byte format. The
 separate `review_economics.py --output PATH` script runs an analytic and seeded
 one million interval model. It uses no live network data and is not an adoption
 test. The reviewed model output is in `doc/work-contributions/review/`.
@@ -45,3 +44,10 @@ It does not execute the full upstream functional/unit/fuzz suites, a physical
 ASIC test, public-testnet trial, or economic/adoption experiment. A temporary
 long-maturity overlap is exercised by the review suite. Assumevalid, crash
 recovery and a broader matrix of activation interactions remain outstanding.
+
+`compare_fee_rules.py --output PATH` compares three fee policies, twelve slot
+and multiplier cases, and three maturity schedules. It checks integer reward
+conservation and reports analytic expectations. Alternative fees, caps and
+locks are model cases, not additional consensus settings. Only the existing
+combined fee policy and long lock control are implemented. Current comparison
+output is in `doc/work-contributions/v4/`.

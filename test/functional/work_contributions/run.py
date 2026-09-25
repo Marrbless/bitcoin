@@ -33,7 +33,7 @@ root = Path(__file__).resolve().parent
 summary = {'binaries': {k: hashlib.sha256(p.read_bytes()).hexdigest() for k, p in
                        [('candidate', args.bitcoind), ('parent', args.parent_bitcoind)]}, 'suites': []}
 suites = [('test_blake.py', 'results.json'),
-          ('test_sha_boundary.py', 'sha_results.json'),
+          ('test_activation_boundary.py', 'boundary_results.json'),
           ('test_endpoint_blake.py', 'endpoint_results.json'),
           ('test_adversarial.py', 'adversarial_results.json')]
 if args.extended:

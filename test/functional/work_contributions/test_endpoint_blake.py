@@ -118,7 +118,7 @@ def main():
    time.sleep(1.2);check('endpoint remains healthy after local selection',a.rpc.getminingendpointinfo()['error'],'')
    ma.close();ma=SiaMiner(pa);clients=[ma];ma.login();p,_=ma.find(False,seed=30000);check('local mempool X earns strong proof',ma.request('mining.submit',p)['result'])
    wait(lambda:len(a.rpc.getminingendpointinfo()['proofs'])==1)
-   p=bytes.fromhex(a.rpc.getminingendpointinfo()['proofs'][0]);check('native selection commits local txid',p[-102:-70].hex(),bytes.fromhex(z.hash)[::-1].hex())
+   p=bytes.fromhex(a.rpc.getminingendpointinfo()['proofs'][0]);check('native selection commits local txid',p[-98:-66].hex(),bytes.fromhex(z.hash)[::-1].hex())
    (RESULTS/'settled_block.hex').write_text(settled.serialize().hex()+'\n');(RESULTS/'wire_trace.json').write_text(json.dumps(ma.trace,indent=2)+'\n')
   finally:
    for c in clients:

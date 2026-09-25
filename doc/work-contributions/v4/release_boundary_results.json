@@ -1,0 +1,104 @@
+[
+  {
+    "name": "SHA templates retain inherited rules",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "contribution RPC unavailable before BLAKE",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "endpoint unavailable before BLAKE",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "SHA remains unrestricted by contribution output cap",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "SHA boundary parent accepts",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "BLAKE template requires contribution rule negotiation",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "first contribution template has BLAKE header",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "first contribution template has correct height",
+    "actual": 101,
+    "expected": 101,
+    "passed": true
+  },
+  {
+    "name": "parent accepts84 bytes outside RDTS",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "contribution rule rejects84 bytes outside RDTS",
+    "actual": "n8-output-size",
+    "expected": "n8-output-size",
+    "passed": true
+  },
+  {
+    "name": "83 byte script accepted outside RDTS",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "83 byte script parent compatible",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "BLAKE activation block accepted",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "BLAKE activation block parent accepted",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "reorg returns to SHA tip",
+    "actual": "3cec4e802f04dced4ca286d799333a4c8ce1f76d884b4445108fde92d252226b",
+    "expected": "3cec4e802f04dced4ca286d799333a4c8ce1f76d884b4445108fde92d252226b",
+    "passed": true
+  },
+  {
+    "name": "reorg restores inherited template rules",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "BLAKE contribution tip restored",
+    "actual": "707399a325721097ab2317ba92b8148b9dc302befc9437c635420c6c71f273e8",
+    "expected": "707399a325721097ab2317ba92b8148b9dc302befc9437c635420c6c71f273e8",
+    "passed": true
+  }
+]

@@ -1,6 +1,6 @@
-# Work-bound transaction contributions — draft specification 0.3
+# Work-bound transaction contributions — draft specification 0.4
 
-Status: research specification, 2026-09-25. Implemented research format v3; not an activation proposal or frozen standard.
+Status: research specification, 2026-09-25. Implemented research format v4; not an activation proposal or frozen standard.
 
 ## Objective and scope
 
@@ -14,7 +14,7 @@ This proposal introduces no second chain, extra chainwork, identity registry, sh
 
 Submission base: bitcoinknots/bitcoin `58398baf33e588779685ead478e6397bb28ed3d6`
 (`v29.4.2.knots20260508`). The patch preserves the parent's BLAKE2b algorithm
-and profiles. The implemented certificate version is 3. The private endpoint
+and profiles. The implemented certificate version is 4. The private endpoint
 serves profile 0; consensus tests cover all four profiles.
 
 ## Provisional control parameters
@@ -38,12 +38,12 @@ These are reproducible controls, not production recommendations. The earlier thr
 ## Consensus rules represented by the current experiment
 
 1. All inherited block, transaction, script, monetary and resource-limit checks remain necessary. The contribution rule is an additional check in block connection after computing actual fees. Genesis is not a contribution settlement block; the current check requires a parent.
-2. At an active height, parse contribution evidence only from the settling block's coinbase. Ordinary transaction data is not contribution evidence. A block with no proofs remains possible and receives only the finder slot.
-3. Each certificate contains a source header, compact coinbase-hash evidence, X's transaction ID, and compressed early/late public keys. Both public keys must be fully valid. The same person may control both; ownership is not tested.
-4. Source parent equals settling parent. Source nBits equals the inherited next-work requirement evaluated for that source header. Source time exceeds parent median time past and is no later than settling time. Both header modes require nVersion >= 4. At a BLAKE2b height the header must use the inherited v2 serialization, carry parent height+1, and have no reserved 0xc0 flag bits; at other heights it must use the legacy serialization.
+2. Activation requires both the explicit contribution height and the inherited BLAKE2b height. The historical SHA path is unchanged. At an active height, parse contribution evidence only from the settling block's coinbase. Ordinary transaction data is not contribution evidence. A block with no proofs remains possible and receives only the finder slot.
+3. Each certificate contains a BLAKE2b source header, X's transaction ID, and compressed early/late public keys. Both public keys must be fully valid. The same person may control both; ownership is not tested.
+4. Source parent equals settling parent. Source nBits equals the inherited next-work requirement evaluated for that source header. Source time exceeds parent median time past and is no later than settling time. The header requires nVersion >= 4, the inherited v2 serialization, parent height+1, and no reserved 0xc0 flag bits. Legacy header certificates are rejected.
 5. For valid decoded target T, source hash h must satisfy T < h <= min(20T, 2^256 - 1). A full block solution is not also a paid weak contribution. Weak contributions do not add to chainwork or alter fork choice.
 6. Within a settling block, reject duplicate source-header hashes. Distinct proofs may commit the same X and recipients. There is no enforced transaction diversity or operator identity.
-7. Reconstruct the committed source coinbase leaf and fold its leftmost Merkle branch; the resulting root must equal the source header's root. The omitted source block is not supplied or validated. A valid certificate is contextual work bound to terms, not proof that its entire source was a valid block or that X appeared in that source.
+7. Require the header m_mm_rhs field to equal the tagged hash of X and both keys defined below. No source coinbase, imported SHA state, Merkle branch, or source length is supplied. The omitted source block is not supplied or validated. A valid certificate is contextual work bound to terms, not proof that its entire source was a valid block or that X appeared in that source.
 8. Each credited X must appear among the settling block's non-coinbase transaction IDs. Ordinary validity ensures its inputs, signatures and dependencies work in that block. Conflicting Xs cannot both be settled. No global arrival order, oldest-first order, mandatory inclusion, or automatic punishment for omission exists.
 9. Let B = subsidy + actual fees, S = floor(B/20), k = floor(S/20), and n = number of credited proofs. Finder allocation is S + n*k. Each proof receives S-k. Total authorized positive outputs are (n+1)*S. B-(n+1)*S is unclaimed, including division remainder. No recipient can take unused slots without supplying valid eligible work.
 10. Split each recipient allocation A separately: early=floor(A/2), late=A-early. Pay using P2WSH scripts whose witness scripts are `<depth> OP_CHECKSEQUENCEVERIFY OP_DROP <compressed pubkey> OP_CHECKSIG`. Omit zero-valued reward outputs. Sum by script for validation, so identical recipients' scripts can be aggregated without changing per-allocation rounding. Current validation requires exact expected positive sums; it does not permit arbitrary voluntary underclaim of assigned outputs. That exactness is a restriction relative to the parent and must be explicit in review.
@@ -51,58 +51,56 @@ These are reproducible controls, not production recommendations. The earlier thr
 12. Spending rewards must satisfy BOTH inherited coinbase restrictions and the new output script. These locks do not override an inherited maturity rule. Block counts are normative; 45 days and one year are only nominal descriptions at a ten-minute cadence.
 13. Eligibility is branch-relative. A proof expires on a different parent. If a reorg restores its exact parent it can be eligible again, with the orphaned payout removed by ordinary UTXO rollback. There is no permanent paid-share database.
 
-## Implemented compact encoding (v3)
+## Implemented fixed encoding (v4)
 
-All integers below are unsigned little-endian except SHA state words. The layout is:
+Version 4 replaces the experimental v3 format on fresh research chains. It is
+not a compatible upgrade of a chain already enforcing v3, and no migration is
+supplied. The soft-fork claim is relative to the unmodified pinned release.
+
+The certificate is exactly **263 bytes**, with no variable length fields:
 
 | Field | Bytes |
 | --- | ---: |
-| Certificate version, value 3 | 1 |
-| Inherited source header (legacy / BLAKE2b v2) | 80 / 164 |
-| Non-witness source coinbase length (106..300000) | 4 |
-| SHA256 midstate, eight big-endian words | 32 |
-| Branch count d, 0..12 | 1 |
-| Leftmost Merkle branch | 32*d |
+| Certificate version, value 4 | 1 |
+| Inherited BLAKE2b v2 source header | 164 |
 | X, raw uint256 wire order | 32 |
 | Compressed early key | 33 |
 | Compressed late key | 33 |
-| Source coinbase locktime | 4 |
 
-Certificate size is 220+32*d for legacy and 304+32*d for BLAKE2b, maximum
-688 bytes. Reject trailing bytes. BLAKE2b source transaction count is 1..4096
-and d must equal ceil(log2(count)). This checks structure, not the omitted
-transactions. Candidate construction accepts at most 4095 non-coinbase
-transactions and refreshes m_txcount after assembling them.
+Let tag be the UTF-8 bytes `Bitcoin mining contribution v4`, without a terminator.
+Let t = SHA256(tag). The 32 raw bytes of header.m_mm_rhs must equal
+`SHA256(t || t || X_wire32 || early_key33 || late_key33)`.
+The inherited header hash commits this field. Tagged SHA256 uses the existing
+hash API; the upstream SHA256 implementation is unchanged. Reject any other
+certificate size, version, header mode, invalid key, or commitment mismatch.
+No separate signature or proof-funding transaction is added.
 
-The source coinbase ends with two zero-valued outputs: an OP_RETURN-only script,
-then OP_RETURN pushing `N8C0 || 44 zero bytes || terms_hash`.
-Terms_hash = double-SHA256(`N8C0 || X || early_key || late_key`).
-The scripts are 1 and 83 bytes; their serialized outputs total 102 bytes.
-The known 63 bytes preceding terms_hash are:
-`00 01 6a || 8 zero bytes || 53 6a 4c 50 || N8C0 || 44 zero bytes`.
+This is contextual work bound to X and keys, not proof of an omitted valid
+source block. Source transaction count does not size or bound any certificate
+field. Normal block validation checks the settling block's transaction count,
+Merkle root and X. Candidate construction retains its local cap of 4095
+non-coinbase transactions. It sets m_mm_rhs when asked to mine a contribution
+and no longer appends padded source commitment outputs.
 
-Let rem=(source_length-36) mod 64 and cut=source_length-36-rem. Resume SHA256
-at the supplied aligned state with byte count cut, append the final rem bytes
-of that known prefix, terms_hash and locktime; finalize and SHA256 again.
-Fold the resulting leaf with the leftmost branch and compare with the header
-Merkle root. At cut=0 require the standard SHA initial state. For nonzero cut,
-the omitted prefix is not validated or proven to exist. This is a contextual
-work commitment, not a proof of source-block validity. Independent cryptographic
-review of arbitrary-midstate binding remains required.
+**Compatibility choice:** contributed work dedicates m_mm_rhs to this commitment.
+The same header cannot independently use that field for an unrelated merge
+mining commitment. No auxiliary commitment branch is introduced. Full blocks
+without contribution claims retain the inherited freedom to use that field.
+Changing X or recipients changes the committed header and requires qualifying
+work on that header; work cannot be transferred by editing the certificate.
 
 Settlement evidence body:
-`count:u8 || (certificate_length:u16LE || certificate)*count`, count 1..19.
-There is no additional inner magic. Maximum body size is **13,111 bytes**.
-Split the body into consecutive chunks of at most 72 bytes. Each chunk occupies
-a canonical zero-valued OP_RETURN output carrying
-`N8PF || index:u16LE || total:u16LE || chunk`.
+`count:u8 || certificate263*count`, count 1..19. No per-certificate length.
+Maximum body size is **4,998 bytes**. Split into consecutive chunks of at most
+72 bytes. Each chunk occupies a canonical zero-valued OP_RETURN output carrying
+`N4PF || index:u16LE || total:u16LE || chunk`.
 Maximum payload is 80 bytes, maximum script is **83 bytes**, maximum count is
-183 fragments. Non-final chunks must contain 72 bytes. Require one contiguous
+70 fragments. Non-final chunks contain exactly 72 bytes. Require one contiguous
 ordered run beginning at index zero, a consistent total and complete body;
-reject gaps, repeats, noncanonical pushes, excess data and N2P1/N5P0 carriers.
-Zero proofs means no evidence carrier. The active contribution rule explicitly
-enforces the 83-byte bound for every coinbase OP_RETURN, even outside RDTS.
-The bound is per output script, not per certificate or whole coinbase.
+reject gaps, repeats, noncanonical pushes, excess data and N2P1/N5P0/N8PF carriers.
+Zero proofs means no evidence carrier. The active rule explicitly enforces the
+83-byte bound for every coinbase OP_RETURN, including outside RDTS. The bound
+is per output script, not per certificate or whole coinbase.
 
 ## Native mining and relay boundary
 
@@ -116,8 +114,7 @@ rejected solely because those budgets are exhausted.
 
 The endpoint is private-regtest, loopback-only, four clients and two jobs/client,
 with bounded relay to one configured peer. It is not the DATUM pool protocol and
-does not inherit DATUM anti-withholding protections. SHA/BLAKE mode is selected
-at startup; restart at a transition. Hardware compatibility, public binding,
+does not inherit DATUM anti-withholding protections. The contribution endpoint requires active BLAKE2b rules; it has no SHA mining path. Hardware compatibility, public binding,
 peer selection, sustained multi-operator operation, portability and integration
 with the normal test runner remain review/implementation work. Relay is best-effort.
 
@@ -156,11 +153,12 @@ Conditional comparison, at matched hashpower, group size and inclusion access: n
 
 ## Completion criteria
 
-Independently review and freeze the implemented BLAKE encoding and source-proof contract; extend the native port and cross-node compatibility evidence; demonstrate bounded resource behavior; reproduce the economic comparison including full rebates; perform independent consensus/cryptographic review; publish the white paper and implementation with limitations. A testnet success demonstrates operation under the tested conditions, not real-money adoption or guaranteed censorship resistance.
+Independently review and freeze the implemented BLAKE encoding and header commitment contract; extend the native port and cross-node compatibility evidence; demonstrate bounded resource behavior; reproduce the economic comparison including full rebates; perform independent consensus/cryptographic review; publish the white paper and implementation with limitations. A testnet success demonstrates operation under the tested conditions, not real-money adoption or guaranteed censorship resistance.
 
-## Subsequent system review
+## Design comparisons
 
-[SYSTEM_REVIEW.md](SYSTEM_REVIEW.md) derives the intrinsic empty-slot benchmark,
-checks marginal fee allocation against native blocks, examines financing and
-documents an alternative use of the inherited BLAKE2b header. None of those
-experiments changes the normative v3 rules or selects new parameter values.
+[SYSTEM_REVIEW.md](SYSTEM_REVIEW.md) preserves the v3 review that motivated this
+simplification. [DESIGN_CHOICES.md](DESIGN_CHOICES.md) compares fee policies,
+slots and maturity. Only the fixed proof and BLAKE activation boundary changed
+in v4. Reward basis, split, multiplier, cap and locks remain the prior controls;
+comparison cases are not selectable consensus settings or node votes.

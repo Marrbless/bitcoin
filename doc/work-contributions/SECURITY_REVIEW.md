@@ -31,7 +31,7 @@ full block afterward. See the retained before and after evidence.
 | Surface | Exercised here | Remaining exposure |
 | --- | --- | --- |
 | Certificate parser | All strict prefixes of a valid certificate, bounded random bytes, targeted field mutations, maximum evidence | Coverage guided fuzzing, independent parser and cryptographic review |
-| Work and recipients | Work reuse with altered X, keys or locktime rejected; all four inherited BLAKE2b profiles | Independent review of the arbitrary midstate construction |
+| Work and recipients | Work reuse with altered X, keys or header commitment rejected; all four inherited BLAKE2b profiles | Independent review of the tagged header commitment |
 | Reward settlement | Wrong scripts, redirection, underpayment, duplicate metadata, aggregate and split recipient outputs | Broad arithmetic and fee boundary fuzzing |
 | Persistence | Settlement reproduced by chainstate reindex, then invalidate and reconsider; activation crossed on an alternate branch | Assumevalid, broader activation interactions, crash and interrupted reindex campaigns |
 | Endpoint resources | Rejected contribution budget, repeated authorization, malformed frames, connection churn with real block production | Sustained multi peer contention, slow readers, network partitions and recovery, production scheduling |
@@ -42,29 +42,21 @@ stress test is a local, sequential connection fixture with a legitimate miner
 kept connected. It does not establish fairness when attackers occupy all four
 connections or saturate the network.
 
-## A smaller commitment may be possible
+## Smaller commitment adopted in v4
 
-The subsequent [system review](SYSTEM_REVIEW.md) includes an experiment accepted
-by candidate and parent on all four inherited profiles. It also records reward
-utilization, marginal fee effects and a temporary maturity overlap test. The
-alternative certificate remains a model, not an implemented consensus rule.
+The inherited BLAKE2b header field m_mm_rhs now commits a tagged hash of X and
+both reward keys. The fixed 263 byte certificate removes imported SHA state,
+source coinbase lengths, branches and locktime. The upstream SHA implementation
+is restored unchanged. Evidence is capped at 4,998 body bytes and 70 fragments.
 
-The inherited BLAKE2b header already contains `m_mm_rhs`, a 32 byte input to
-the tagged merge mining hook included in the work hash. The inherited
-`feature_powchange.py` test accepts a block with this field nonzero.
+The tradeoff is explicit: contributed work cannot independently use that field
+for unrelated merge mining. No auxiliary branch or historical SHA contribution
+path is added. Source block validity remains outside the proof's claim.
 
-A possible alternative is to place a domain separated hash of X and the two
-reward keys in that field. A certificate could then contain only a version,
-the 164 byte header, X and the two 33 byte keys: 263 bytes before settlement
-framing. This could remove the source coinbase length, imported SHA256 state,
-Merkle branch and locktime from contribution evidence.
-
-This alternative is not implemented or selected by this revision. It needs
-analysis of compatibility with the field's existing merge mining purpose,
-domain separation, hardware and gateway behavior, and whether the proposal
-should support contributions on the historical SHA256d path at all. The
-83 byte per script limit would still require fragmented settlement evidence.
-Changing this design would require a new encoding and a fresh validation run.
+Fresh v4 validation is recorded separately from historical v3 evidence.
+Independent commitment and consensus review, hardware compatibility and
+coverage guided parser fuzzing remain required. A smaller parser is a reduced
+surface, not a cryptographic security proof.
 
 ## Economic limits are design limits
 
@@ -85,7 +77,7 @@ the research objective, not a demonstrated consensus guarantee.
 
 ## Gates before a deployment proposal
 
-1. Decide whether the proof format can be reduced before hardening it further.
+1. Review the v4 commitment and its use of the inherited merge mining field.
 2. Independently review the exact consensus specification and binding argument.
 3. Add coverage guided parser fuzzing, sanitizer campaigns and arithmetic tests
    to normal upstream test infrastructure.

@@ -1,0 +1,469 @@
+{
+  "scope": "Offline comparison. Only all_shared_fees and current_control maturity are implemented. Independent work; instantaneous full relay; compatible X; constant rewards; no target clipping, strategic withholding, congestion or adoption model. Same reward scripts and maturity held constant between fee policies. Each policy has one global split, not node voting.",
+  "rounding_checks": 3840,
+  "marginal_fee_rows": [
+    {
+      "policy": "finder_fees",
+      "shared_fee_fraction": 0.0,
+      "foreign_proofs": 0,
+      "added_fee_sats": 400000,
+      "finder_sats": 400000,
+      "contributors_sats": 0,
+      "unclaimed_sats": 0
+    },
+    {
+      "policy": "finder_fees",
+      "shared_fee_fraction": 0.0,
+      "foreign_proofs": 1,
+      "added_fee_sats": 400000,
+      "finder_sats": 400000,
+      "contributors_sats": 0,
+      "unclaimed_sats": 0
+    },
+    {
+      "policy": "finder_fees",
+      "shared_fee_fraction": 0.0,
+      "foreign_proofs": 10,
+      "added_fee_sats": 400000,
+      "finder_sats": 400000,
+      "contributors_sats": 0,
+      "unclaimed_sats": 0
+    },
+    {
+      "policy": "finder_fees",
+      "shared_fee_fraction": 0.0,
+      "foreign_proofs": 19,
+      "added_fee_sats": 400000,
+      "finder_sats": 400000,
+      "contributors_sats": 0,
+      "unclaimed_sats": 0
+    },
+    {
+      "policy": "quarter_shared_fees",
+      "shared_fee_fraction": 0.25,
+      "foreign_proofs": 0,
+      "added_fee_sats": 400000,
+      "finder_sats": 305000,
+      "contributors_sats": 0,
+      "unclaimed_sats": 95000
+    },
+    {
+      "policy": "quarter_shared_fees",
+      "shared_fee_fraction": 0.25,
+      "foreign_proofs": 1,
+      "added_fee_sats": 400000,
+      "finder_sats": 305250,
+      "contributors_sats": 4750,
+      "unclaimed_sats": 90000
+    },
+    {
+      "policy": "quarter_shared_fees",
+      "shared_fee_fraction": 0.25,
+      "foreign_proofs": 10,
+      "added_fee_sats": 400000,
+      "finder_sats": 307500,
+      "contributors_sats": 47500,
+      "unclaimed_sats": 45000
+    },
+    {
+      "policy": "quarter_shared_fees",
+      "shared_fee_fraction": 0.25,
+      "foreign_proofs": 19,
+      "added_fee_sats": 400000,
+      "finder_sats": 309750,
+      "contributors_sats": 90250,
+      "unclaimed_sats": 0
+    },
+    {
+      "policy": "all_shared_fees",
+      "shared_fee_fraction": 1.0,
+      "foreign_proofs": 0,
+      "added_fee_sats": 400000,
+      "finder_sats": 20000,
+      "contributors_sats": 0,
+      "unclaimed_sats": 380000
+    },
+    {
+      "policy": "all_shared_fees",
+      "shared_fee_fraction": 1.0,
+      "foreign_proofs": 1,
+      "added_fee_sats": 400000,
+      "finder_sats": 21000,
+      "contributors_sats": 19000,
+      "unclaimed_sats": 360000
+    },
+    {
+      "policy": "all_shared_fees",
+      "shared_fee_fraction": 1.0,
+      "foreign_proofs": 10,
+      "added_fee_sats": 400000,
+      "finder_sats": 30000,
+      "contributors_sats": 190000,
+      "unclaimed_sats": 180000
+    },
+    {
+      "policy": "all_shared_fees",
+      "shared_fee_fraction": 1.0,
+      "foreign_proofs": 19,
+      "added_fee_sats": 400000,
+      "finder_sats": 39000,
+      "contributors_sats": 361000,
+      "unclaimed_sats": 0
+    }
+  ],
+  "slot_rows": [
+    {
+      "slots": 5,
+      "max_contributions": 4,
+      "multiplier": 5,
+      "expected_weak_per_block": 4,
+      "expected_paid_fraction": 0.67232,
+      "full_inventory_probability": 0.4096,
+      "max_certificate_body_bytes": 1053,
+      "max_fragments": 15,
+      "serialized_carrier_outputs_bytes": 1352
+    },
+    {
+      "slots": 5,
+      "max_contributions": 4,
+      "multiplier": 10,
+      "expected_weak_per_block": 9,
+      "expected_paid_fraction": 0.81902,
+      "full_inventory_probability": 0.6561,
+      "max_certificate_body_bytes": 1053,
+      "max_fragments": 15,
+      "serialized_carrier_outputs_bytes": 1352
+    },
+    {
+      "slots": 5,
+      "max_contributions": 4,
+      "multiplier": 25,
+      "expected_weak_per_block": 24,
+      "expected_paid_fraction": 0.923136512,
+      "full_inventory_probability": 0.84934656,
+      "max_certificate_body_bytes": 1053,
+      "max_fragments": 15,
+      "serialized_carrier_outputs_bytes": 1352
+    },
+    {
+      "slots": 10,
+      "max_contributions": 9,
+      "multiplier": 10,
+      "expected_weak_per_block": 9,
+      "expected_paid_fraction": 0.6513215599,
+      "full_inventory_probability": 0.387420489,
+      "max_certificate_body_bytes": 2368,
+      "max_fragments": 33,
+      "serialized_carrier_outputs_bytes": 3027
+    },
+    {
+      "slots": 10,
+      "max_contributions": 9,
+      "multiplier": 20,
+      "expected_weak_per_block": 19,
+      "expected_paid_fraction": 0.8025261215232422,
+      "full_inventory_probability": 0.6302494097246094,
+      "max_certificate_body_bytes": 2368,
+      "max_fragments": 33,
+      "serialized_carrier_outputs_bytes": 3027
+    },
+    {
+      "slots": 10,
+      "max_contributions": 9,
+      "multiplier": 50,
+      "expected_weak_per_block": 49,
+      "expected_paid_fraction": 0.9146359655622656,
+      "full_inventory_probability": 0.8337477621301499,
+      "max_certificate_body_bytes": 2368,
+      "max_fragments": 33,
+      "serialized_carrier_outputs_bytes": 3027
+    },
+    {
+      "slots": 20,
+      "max_contributions": 19,
+      "multiplier": 20,
+      "expected_weak_per_block": 19,
+      "expected_paid_fraction": 0.6415140775914577,
+      "full_inventory_probability": 0.37735360253530764,
+      "max_certificate_body_bytes": 4998,
+      "max_fragments": 70,
+      "serialized_carrier_outputs_bytes": 6397
+    },
+    {
+      "slots": 20,
+      "max_contributions": 19,
+      "multiplier": 40,
+      "expected_weak_per_block": 39,
+      "expected_paid_fraction": 0.7946246395617992,
+      "full_inventory_probability": 0.6181412104811287,
+      "max_certificate_body_bytes": 4998,
+      "max_fragments": 70,
+      "serialized_carrier_outputs_bytes": 6397
+    },
+    {
+      "slots": 20,
+      "max_contributions": 19,
+      "multiplier": 100,
+      "expected_weak_per_block": 99,
+      "expected_paid_fraction": 0.9104653120138456,
+      "full_inventory_probability": 0.8261686238355868,
+      "max_certificate_body_bytes": 4998,
+      "max_fragments": 70,
+      "serialized_carrier_outputs_bytes": 6397
+    },
+    {
+      "slots": 40,
+      "max_contributions": 39,
+      "multiplier": 40,
+      "expected_weak_per_block": 39,
+      "expected_paid_fraction": 0.6367675601121193,
+      "full_inventory_probability": 0.37254609219269813,
+      "max_certificate_body_bytes": 10258,
+      "max_fragments": 143,
+      "serialized_carrier_outputs_bytes": 13117
+    },
+    {
+      "slots": 40,
+      "max_contributions": 39,
+      "multiplier": 80,
+      "expected_weak_per_block": 79,
+      "expected_paid_fraction": 0.7907553695846039,
+      "full_inventory_probability": 0.6122757622356436,
+      "max_certificate_body_bytes": 10258,
+      "max_fragments": 143,
+      "serialized_carrier_outputs_bytes": 13117
+    },
+    {
+      "slots": 40,
+      "max_contributions": 39,
+      "multiplier": 200,
+      "expected_weak_per_block": 199,
+      "expected_paid_fraction": 0.9083993948866281,
+      "full_inventory_probability": 0.8224322824348487,
+      "max_certificate_body_bytes": 10258,
+      "max_fragments": 143,
+      "serialized_carrier_outputs_bytes": 13117
+    }
+  ],
+  "maturity_rows": [
+    {
+      "case": "inherited_baseline",
+      "early_blocks": 100,
+      "late_blocks": 100,
+      "assumed_annual_discount_rate": 0,
+      "present_value_fraction": 1.0,
+      "loss_vs_100_block_baseline": 0.0,
+      "own_node_pv": 1.0,
+      "full_rebate_delegated_pv": 1.0
+    },
+    {
+      "case": "inherited_baseline",
+      "early_blocks": 100,
+      "late_blocks": 100,
+      "assumed_annual_discount_rate": 0.05,
+      "present_value_fraction": 0.9999071767509444,
+      "loss_vs_100_block_baseline": 0.0,
+      "own_node_pv": 0.9999071767509444,
+      "full_rebate_delegated_pv": 0.9999071767509444
+    },
+    {
+      "case": "inherited_baseline",
+      "early_blocks": 100,
+      "late_blocks": 100,
+      "assumed_annual_discount_rate": 0.1,
+      "present_value_fraction": 0.9998186804818393,
+      "loss_vs_100_block_baseline": 0.0,
+      "own_node_pv": 0.9998186804818393,
+      "full_rebate_delegated_pv": 0.9998186804818393
+    },
+    {
+      "case": "inherited_baseline",
+      "early_blocks": 100,
+      "late_blocks": 100,
+      "assumed_annual_discount_rate": 0.2,
+      "present_value_fraction": 0.9996531774384486,
+      "loss_vs_100_block_baseline": 0.0,
+      "own_node_pv": 0.9996531774384486,
+      "full_rebate_delegated_pv": 0.9996531774384486
+    },
+    {
+      "case": "short_comparison",
+      "early_blocks": 100,
+      "late_blocks": 1008,
+      "assumed_annual_discount_rate": 0,
+      "present_value_fraction": 1.0,
+      "loss_vs_100_block_baseline": 0.0,
+      "own_node_pv": 1.0,
+      "full_rebate_delegated_pv": 1.0
+    },
+    {
+      "case": "short_comparison",
+      "early_blocks": 100,
+      "late_blocks": 1008,
+      "assumed_annual_discount_rate": 0.05,
+      "present_value_fraction": 0.9994859563023766,
+      "loss_vs_100_block_baseline": 0.00042125955124805436,
+      "own_node_pv": 0.9994859563023766,
+      "full_rebate_delegated_pv": 0.9994859563023766
+    },
+    {
+      "case": "short_comparison",
+      "early_blocks": 100,
+      "late_blocks": 1008,
+      "assumed_annual_discount_rate": 0.1,
+      "present_value_fraction": 0.9989962417751794,
+      "loss_vs_100_block_baseline": 0.0008225878578939083,
+      "own_node_pv": 0.9989962417751794,
+      "full_rebate_delegated_pv": 0.9989962417751794
+    },
+    {
+      "case": "short_comparison",
+      "early_blocks": 100,
+      "late_blocks": 1008,
+      "assumed_annual_discount_rate": 0.2,
+      "present_value_fraction": 0.9980813527732064,
+      "loss_vs_100_block_baseline": 0.001572369998632861,
+      "own_node_pv": 0.9980813527732064,
+      "full_rebate_delegated_pv": 0.9980813527732064
+    },
+    {
+      "case": "current_control",
+      "early_blocks": 6480,
+      "late_blocks": 52560,
+      "assumed_annual_discount_rate": 0,
+      "present_value_fraction": 1.0,
+      "loss_vs_100_block_baseline": 0.0,
+      "own_node_pv": 1.0,
+      "full_rebate_delegated_pv": 1.0
+    },
+    {
+      "case": "current_control",
+      "early_blocks": 6480,
+      "late_blocks": 52560,
+      "assumed_annual_discount_rate": 0.05,
+      "present_value_fraction": 0.9731918909556936,
+      "loss_vs_100_block_baseline": 0.02671776582508223,
+      "own_node_pv": 0.9731918909556936,
+      "full_rebate_delegated_pv": 0.9731918909556936
+    },
+    {
+      "case": "current_control",
+      "early_blocks": 6480,
+      "late_blocks": 52560,
+      "assumed_annual_discount_rate": 0.1,
+      "present_value_fraction": 0.948704553653896,
+      "loss_vs_100_block_baseline": 0.05112339649756292,
+      "own_node_pv": 0.948704553653896,
+      "full_rebate_delegated_pv": 0.948704553653896
+    },
+    {
+      "case": "current_control",
+      "early_blocks": 6480,
+      "late_blocks": 52560,
+      "assumed_annual_discount_rate": 0.2,
+      "present_value_fraction": 0.9055530405706098,
+      "loss_vs_100_block_baseline": 0.09413278424119531,
+      "own_node_pv": 0.9055530405706098,
+      "full_rebate_delegated_pv": 0.9055530405706098
+    }
+  ],
+  "fee_mix_rows": [
+    {
+      "policy": "finder_fees",
+      "fees_fraction_of_total_reward": 0,
+      "expected_claimed_fraction": 0.6415140775914577,
+      "expected_contributor_fraction": 0.5619383737118848
+    },
+    {
+      "policy": "finder_fees",
+      "fees_fraction_of_total_reward": 0.1,
+      "expected_claimed_fraction": 0.677362669832312,
+      "expected_contributor_fraction": 0.5057445363406964
+    },
+    {
+      "policy": "finder_fees",
+      "fees_fraction_of_total_reward": 0.5,
+      "expected_claimed_fraction": 0.8207570387957288,
+      "expected_contributor_fraction": 0.2809691868559424
+    },
+    {
+      "policy": "finder_fees",
+      "fees_fraction_of_total_reward": 0.9,
+      "expected_claimed_fraction": 0.9641514077591458,
+      "expected_contributor_fraction": 0.056193837371188465
+    },
+    {
+      "policy": "finder_fees",
+      "fees_fraction_of_total_reward": 1,
+      "expected_claimed_fraction": 1.0,
+      "expected_contributor_fraction": 0.0
+    },
+    {
+      "policy": "quarter_shared_fees",
+      "fees_fraction_of_total_reward": 0,
+      "expected_claimed_fraction": 0.6415140775914577,
+      "expected_contributor_fraction": 0.5619383737118848
+    },
+    {
+      "policy": "quarter_shared_fees",
+      "fees_fraction_of_total_reward": 0.1,
+      "expected_claimed_fraction": 0.6684005217720985,
+      "expected_contributor_fraction": 0.5197929956834935
+    },
+    {
+      "policy": "quarter_shared_fees",
+      "fees_fraction_of_total_reward": 0.5,
+      "expected_claimed_fraction": 0.775946298494661,
+      "expected_contributor_fraction": 0.351211483569928
+    },
+    {
+      "policy": "quarter_shared_fees",
+      "fees_fraction_of_total_reward": 0.9,
+      "expected_claimed_fraction": 0.8834920752172237,
+      "expected_contributor_fraction": 0.18262997145636253
+    },
+    {
+      "policy": "quarter_shared_fees",
+      "fees_fraction_of_total_reward": 1,
+      "expected_claimed_fraction": 0.9103785193978644,
+      "expected_contributor_fraction": 0.1404845934279712
+    },
+    {
+      "policy": "all_shared_fees",
+      "fees_fraction_of_total_reward": 0,
+      "expected_claimed_fraction": 0.6415140775914577,
+      "expected_contributor_fraction": 0.5619383737118848
+    },
+    {
+      "policy": "all_shared_fees",
+      "fees_fraction_of_total_reward": 0.1,
+      "expected_claimed_fraction": 0.6415140775914577,
+      "expected_contributor_fraction": 0.5619383737118848
+    },
+    {
+      "policy": "all_shared_fees",
+      "fees_fraction_of_total_reward": 0.5,
+      "expected_claimed_fraction": 0.6415140775914577,
+      "expected_contributor_fraction": 0.5619383737118848
+    },
+    {
+      "policy": "all_shared_fees",
+      "fees_fraction_of_total_reward": 0.9,
+      "expected_claimed_fraction": 0.6415140775914577,
+      "expected_contributor_fraction": 0.5619383737118848
+    },
+    {
+      "policy": "all_shared_fees",
+      "fees_fraction_of_total_reward": 1,
+      "expected_claimed_fraction": 0.6415140775914577,
+      "expected_contributor_fraction": 0.5619383737118848
+    }
+  ],
+  "invariants": {
+    "v4_certificate_bytes": 263,
+    "current_max_container_bytes": 4998,
+    "current_max_fragments": 70,
+    "current_expected_paid_fraction": 0.6415140775914577,
+    "direct_rebate_has_same_consensus_maturity": true
+  }
+}

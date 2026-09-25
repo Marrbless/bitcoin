@@ -9,10 +9,8 @@ implement the DATUM pool protocol or claim its anti-withholding protections.
 
 The endpoint is still private-regtest, loopback-only, with four clients, two
 retained jobs per client and the existing bounded one-peer contribution relay.
-Start it with the existing startminingendpoint operator RPC. It selects the
-current candidate's PoW mode at startup. A transition between SHA256d and BLAKE2b
-requires restarting the endpoint; mixing hardware modes on one listener is not
-supported. SHA256d's prior 4-byte extranonce2 layout is preserved.
+Start it with the existing startminingendpoint operator RPC. It requires active BLAKE2b contribution rules before opening the listener.
+The v4 endpoint has no historical SHA contribution path.
 
 For BLAKE2b, subscribe returns four bytes of extranonce1 and an eight-byte
 extranonce2 size. Notify uses the ordinary nine-element array:
@@ -43,8 +41,7 @@ these are PoW grinding words and do not change consensus nTime.
 
 This first hardware dialect uses profile 0, zero XOR key/mask and fixed consensus
 time. It rejects unsupported generated profiles instead of silently translating
-them. Consensus still supports all four inherited profiles; their N8 tests were
-rerun after the hashing-helper refactor. Fixed easy-regtest share difficulty is
+them. Consensus still supports all four inherited profiles; their commitment and work checks are covered by the native v4 suite. Fixed easy-regtest share difficulty is
 retained, with no production vardiff or mining-profitability claim. The job nBits
 is the block target, not DATUM's synthetic hidden block-target mechanism.
 
@@ -58,17 +55,11 @@ resource policies, not consensus limits. Attackers can exhaust this shared
 budget, and the policy does not establish public network fairness or safety.
 Full block submissions do not consume the contribution budget.
 
-The N9 endpoint increment changed three C++ files relative to N8 (this PR also contains the earlier consensus work):
-
-- primitives/block.h / block.cpp expose the existing h2 calculation as
-  GetMiningCommitment and call it from GetHash and the endpoint. The calculation
-  and inherited final hash remain unchanged.
-- node/native_stratum.cpp builds and reconstructs Sia work, retains SHA work,
-  advertises blake2b support to local template selection, and reads the complete
-  source header when identifying relayed certificates.
-
-No contribution consensus, reward, maturity, certificate encoding, 83-byte
-output bound, fork-choice or network parameter changed. N8 remains preserved.
+The node retains the transaction list and sets the header commitment to X and
+reward keys. It creates fixed v4 certificates from qualifying submissions and
+relays at most 19 retained proofs. Relayed evidence must be exactly 263 bytes
+and version 4 before contextual validation. The endpoint adds no chainwork and
+does not change the inherited work hash.
 
 Wire reference: CONVOYMining/datum_gateway commit
 b9ea7dc3eb91352565ab487ec55ed6ee5964a440, src/datum_stratum.c and src/datum_pow.c.
@@ -90,7 +81,7 @@ through the endpoint settles both Xs. The unmodified parent validates the chain.
 Tests include 8-/16-digit time/nonce fields, extended nonce words, commitment
 agreement, replay/mutation rejection, actual 19-proof saturation, 4,096 ordinary
 submissions and overflow, full-block priority, expiry and node mempool selection.
-The 127 N8 native and 10 SHA/boundary checks also pass on this binary.
+The separate native and activation suites verify v4 settlement and the BLAKE boundary. See VALIDATION.md for current counts.
 
 This is not a physical ASIC test or a public testnet release. LAN binding,
 operator configuration, sustained multi-operator network trials, robust peer

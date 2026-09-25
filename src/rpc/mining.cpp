@@ -465,7 +465,7 @@ static RPCHelpMan getcontributionblock()
             LOCK(chainman.GetMutex());
             auto& chainstate=chainman.ActiveChainstate();
             CBlockIndex* parent=chainstate.m_chain.Tip();
-            if(parent->nHeight+1<chainman.GetConsensus().GatewayAllocationHeight) throw JSONRPCError(RPC_INVALID_PARAMETER,"Contributions not active");
+            if(!chainman.GetConsensus().MiningContributionsActiveAt(parent->nHeight+1)) throw JSONRPCError(RPC_INVALID_PARAMETER,"Contributions not active");
             CCoinsViewCache view{&chainstate.CoinsTip()};
             CAmount fees=0;
             for(const auto& tx:txs) {
@@ -492,22 +492,17 @@ static RPCHelpMan getcontributionblock()
             CMutableTransaction cb{*block.vtx[0]};
             try { cb.vout=Consensus::NodeContributionOutputs(budget,early,late,proofs); }
             catch(const std::exception& e) { throw JSONRPCError(RPC_INVALID_PARAMETER,e.what()); }
-            CScript own_commitment;
+            std::optional<uint256> own_x;
             if(!request.params[2].isNull() && !request.params[2].get_str().empty()) {
                 const auto x=uint256::FromHex(request.params[2].get_str());
                 bool found=false;
                 for(const auto& tx:txs) if(x && tx->GetHash().ToUint256()==*x) found=true;
                 if(!found) throw JSONRPCError(RPC_INVALID_PARAMETER,"Committed X absent from candidate");
-                own_commitment=Consensus::NodeContributionCommitment(*x,early,late);
+                own_x = x;
+                block.m_mm_rhs = Consensus::NodeContributionCommitment(*x, early, late);
             }
             block.vtx[0]=MakeTransactionRef(std::move(cb));
             chainman.GenerateCoinbaseCommitment(block,parent);
-            if (!own_commitment.empty()) {
-                CMutableTransaction final_cb{*block.vtx[0]};
-                final_cb.vout.emplace_back(0,CScript{}<<OP_RETURN);
-                final_cb.vout.emplace_back(0,own_commitment);
-                block.vtx[0]=MakeTransactionRef(std::move(final_cb));
-            }
             block.m_txcount=block.m_header_v2?block.vtx.size():0;
             block.hashMerkleRoot=BlockMerkleRoot(block);
             BlockValidationState state;
@@ -515,7 +510,7 @@ static RPCHelpMan getcontributionblock()
             DataStream stream; stream<<TX_WITH_WITNESS(block);
             UniValue result(UniValue::VOBJ);
             result.pushKV("hex",HexStr(stream)); result.pushKV("proofs",static_cast<int>(proofs.size())); result.pushKV("budget",budget);
-            if(!own_commitment.empty())result.pushKV("candidateproof",HexStr(Consensus::EncodeNodeContribution(block,*uint256::FromHex(request.params[2].get_str()),early,late)));
+            if(own_x)result.pushKV("candidateproof",HexStr(Consensus::EncodeNodeContribution(block,*own_x,early,late)));
             return result;
         }};
 }
@@ -1208,7 +1203,7 @@ static UniValue TemplateToJSON(const Consensus::Params& consensusParams, const C
         aRules.push_back("long_coinbase_maturity");
     }
 
-    if (pindexPrev != nullptr && pindexPrev->nHeight + 1 >= consensusParams.GatewayAllocationHeight) {
+    if (pindexPrev != nullptr && consensusParams.MiningContributionsActiveAt(pindexPrev->nHeight + 1)) {
         if (setClientRules.find("gatewayallocation") == setClientRules.end()) {
             throw JSONRPCError(RPC_INVALID_PARAMETER, "Support for 'gatewayallocation' rule requires explicit client support");
         }

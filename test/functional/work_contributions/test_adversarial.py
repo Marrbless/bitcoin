@@ -88,12 +88,12 @@ def main():
                 b.vtx[0].vout = [o for o in b.vtx[0].vout if not fragment(o)]
                 count = (len(raw) + 71) // 72
                 for i in range(count):
-                    payload = b'N8PF' + struct.pack('<HH', i, count) + raw[i * 72:(i + 1) * 72]
+                    payload = b'N4PF' + struct.pack('<HH', i, count) + raw[i * 72:(i + 1) * 72]
                     b.vtx[0].vout.append(n.CTxOut(0, n.CScript([n.OP_RETURN, payload])))
                 return b
             truncations = 0
             for size in range(len(proof)):
-                body = bytes([1]) + struct.pack('<H', size) + proof[:size]
+                body = bytes([1]) + proof[:size]
                 assert proposal(replace_evidence(body)) is not None, size
                 truncations += 1
             check('all certificate truncations rejected', truncations, len(proof))
@@ -105,16 +105,21 @@ def main():
             for i in range(corpus_size):
                 size = rng.randrange(1, 700)
                 raw = bytes(rng.randrange(256) for _ in range(size))
-                assert proposal(replace_evidence(bytes([1]) + struct.pack('<H', size) + raw)) is not None, i
+                if i % 2:
+                    structured = bytearray(proof)
+                    offset = rng.randrange(165, 263)
+                    structured[offset] ^= rng.randrange(1, 256)
+                    raw = bytes(structured)
+                assert proposal(replace_evidence(bytes([1]) + raw)) is not None, i
             check('bounded random certificate corpus rejected', corpus_size, corpus_size)
             for name, offset, replacement in [
-                ('early recipient', -70, n.H_PUB), ('late recipient', -37, n.G_PUB),
-                ('transaction', -102, bytes(32)), ('locktime', -4, bytes.fromhex('12345678')),
+                ('early recipient', -66, n.H_PUB), ('late recipient', -33, n.G_PUB),
+                ('transaction', -98, bytes(32)), ('header hook', -130, bytes(32)),
             ]:
                 raw = bytearray(proof)
                 start = len(raw) + offset
                 raw[start:start + len(replacement)] = replacement
-                body = bytes([1]) + struct.pack('<H', len(raw)) + raw
+                body = bytes([1]) + raw
                 check('reused work with changed ' + name + ' rejected', proposal(replace_evidence(body)) is not None)
             # Peer validation must be bounded across connections, while actual block solutions remain usable.
             port = a.rpc.startminingendpoint([x.serialize().hex()], x.hash)

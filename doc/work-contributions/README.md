@@ -6,10 +6,11 @@ It is disabled by default and supplies no mainnet activation. Target base:
 `58398baf33e588779685ead478e6397bb28ed3d6`.
 
 - [White paper](WHITE_PAPER.md): motivation, mechanism, economic limits and evidence.
-- [Specification](SPECIFICATION.md): exact reward rules and v3 encoding.
+- [Specification](SPECIFICATION.md): exact reward rules and fixed v4 encoding.
 - [Endpoint](ENDPOINT.md): Linux-only Sia-style BLAKE2b profile-0 mining interface.
 - [Validation](VALIDATION.md): tests run on this submission and outstanding gates.
 - [Security review](SECURITY_REVIEW.md): the reproduced finding, attack surface and open design work.
+- [Design choices](DESIGN_CHOICES.md): fee policy comparison and provisional parameter guidance.
 - [System review](SYSTEM_REVIEW.md): slot utilization, fee incentives, financing and the inherited header experiment.
 - [Test runner](../../test/functional/work_contributions/README.md): reproducible commands.
 
@@ -19,7 +20,6 @@ It is disabled by default and supplies no mainnet activation. Target base:
 | --- | --- |
 | Reward scripts and split | `src/consensus/gateway_allocation.*` |
 | Certificate parsing, work, inclusion and payout checks | `src/consensus/node_contribution.*` |
-| Aligned hash-state access | `src/crypto/sha256.*` |
 | Inherited hash commitment factoring | `src/primitives/block.*` |
 | Opt-in activation and block connection | `src/chainparams.cpp`, `src/kernel/chainparams.*`, `src/validation.cpp` |
 | Candidate construction and template negotiation | `src/node/miner.cpp`, `src/rpc/mining.cpp` |

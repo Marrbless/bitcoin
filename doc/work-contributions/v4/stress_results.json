@@ -1,0 +1,38 @@
+[
+  {
+    "name": "stress exercised all malformed frame families",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "actual block production continued during attack",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  },
+  {
+    "name": "node survived hostile connections",
+    "actual": null,
+    "expected": null,
+    "passed": true
+  },
+  {
+    "name": "endpoint has no worker error",
+    "actual": "",
+    "expected": "",
+    "passed": true
+  },
+  {
+    "name": "malformed traffic earned no contributions",
+    "actual": [],
+    "expected": [],
+    "passed": true
+  },
+  {
+    "name": "RSS growth stayed under fixture budget",
+    "actual": true,
+    "expected": true,
+    "passed": true
+  }
+]

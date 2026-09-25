@@ -53,7 +53,6 @@ struct Endpoint {
     std::any context; UniValue transactions{UniValue::VARR}; std::string x,anchor;
     std::vector<Bytes> proofs; std::set<uint256> seen;
     std::atomic<bool> stopping{false}; std::thread thread; int listener{-1},port{0};
-    bool blake{false};
     uint64_t epoch_ordinary{0};
     // Local admission policy, not a consensus rule. Shared across connections.
     Clock::time_point contribution_epoch{Clock::now()};
@@ -81,30 +80,20 @@ struct Endpoint {
         if(hex.size()!=16||!IsHex(hex))throw std::runtime_error("need 8 or 16 hex digits");
         DataStream ds{ParseHex(hex)};uint32_t low,high;ds>>low>>high;return {low,high};
     }
-    std::vector<uint256> branch(const CBlock& b) {
-        std::vector<uint256> hashes,result;for(const auto& tx:b.vtx)hashes.push_back(tx->GetHash().ToUint256());
-        while(hashes.size()>1){if(hashes.size()%2)hashes.push_back(hashes.back());result.push_back(hashes[1]);std::vector<uint256> next;for(size_t i=0;i<hashes.size();i+=2)next.push_back(Hash(hashes[i],hashes[i+1]));hashes=std::move(next);}return result;
-    }
     Job makejob() {
         UniValue args(UniValue::VARR),ps(UniValue::VARR);{std::lock_guard lock(mutex);for(const auto& p:proofs)ps.push_back(HexStr(p));}
         args.push_back(transactions);args.push_back(ps);args.push_back(x);
         const auto result=call("getcontributionblock",args);Job job;
         if(!DecodeHexBlk(job.block,result["hex"].get_str()))throw std::runtime_error("native candidate decode");
-        if(job.block.m_header_v2) {
-            // Sia work-header mapping: profile 0, fixed consensus time, unmasked work.
-            if(job.block.m_flags||!job.block.m_xor_key.IsNull()||job.block.m_xor_key_mask_clear_bits)throw std::runtime_error("unsupported BLAKE job profile");
-        } else {
-            CMutableTransaction cb{*job.block.vtx[0]};cb.vin[0].scriptSig<<Bytes(8,0);
-            if(cb.vin[0].scriptSig.size()>100)throw std::runtime_error("coinbase script limit");
-            job.block.vtx[0]=MakeTransactionRef(std::move(cb));job.block.hashMerkleRoot=BlockMerkleRoot(job.block);
+        if (!job.block.m_header_v2 || job.block.m_flags || !job.block.m_xor_key.IsNull() || job.block.m_xor_key_mask_clear_bits) {
+            throw std::runtime_error("unsupported BLAKE job profile");
         }
         job.id=std::to_string(++next_job);job.x=x;return job;
     }
     void notify(Client& c,bool clean) {
         Job job=makejob();
-        if(job.block.m_header_v2!=blake)throw std::runtime_error("PoW mode changed; restart endpoint");
         UniValue p(UniValue::VARR);p.push_back(job.id);
-        if(blake) {
+        {
             auto hidden=(TaggedHash("Bitcoin prevblock header, hashed")<<job.block.hashPrevBlock.ReversedBytes()).GetSHA256();
             std::fill_n(hidden.begin(),6,uint8_t{0});p.push_back(HexStr(hidden));
             const auto commitment=job.block.GetMiningCommitment();Bytes first(3,0);
@@ -112,15 +101,6 @@ struct Endpoint {
             p.push_back(HexStr(first));p.push_back("");p.push_back(UniValue(UniValue::VARR));
             p.push_back(hex32(job.block.nVersion));p.push_back(hex32(job.block.nBits));
             DataStream time;time<<uint32_t{0}<<job.block.nTime;p.push_back(HexStr(time));p.push_back(clean);
-        } else {
-            const auto& cb=*job.block.vtx[0];DataStream stream;stream<<TX_NO_WITNESS(cb);
-            Bytes raw(stream.size());std::transform(stream.begin(),stream.end(),raw.begin(),[](std::byte b){return std::to_integer<unsigned char>(b);});
-            const size_t offset=4+1+36+GetSizeOfCompactSize(cb.vin[0].scriptSig.size())+cb.vin[0].scriptSig.size()-8;
-            Bytes prev(job.block.hashPrevBlock.begin(),job.block.hashPrevBlock.end());
-            for(size_t i=0;i<32;i+=4)std::reverse(prev.begin()+i,prev.begin()+i+4);
-            UniValue branches(UniValue::VARR);for(const auto& h:branch(job.block))branches.push_back(HexStr(h));
-            p.push_back(HexStr(prev));p.push_back(HexStr(Span{raw}.first(offset)));p.push_back(HexStr(Span{raw}.subspan(offset+8)));
-            p.push_back(branches);p.push_back(hex32(job.block.nVersion));p.push_back(hex32(job.block.nBits));p.push_back(hex32(job.block.nTime));p.push_back(clean);
         }
         UniValue msg(UniValue::VOBJ);msg.pushKV("id",NullUniValue);msg.pushKV("method","mining.notify");msg.pushKV("params",p);queue(c,msg);
         if(clean){c.jobs.clear();}
@@ -192,9 +172,9 @@ struct Endpoint {
     }
     bool receive_contribution(const UniValue& p) {
         if(!p.isArray()||p.size()!=2||!p[1].isArray()||p[1].size()>128)throw std::runtime_error("bad contribution envelope");
-        const auto hex=p[0].get_str();if(hex.size()<440||hex.size()>2*Consensus::NODE_CONTRIBUTION_MAX_BYTES||!IsHex(hex))throw std::runtime_error("bad proof length");
+        const auto hex=p[0].get_str();if(hex.size()!=2*Consensus::NODE_CONTRIBUTION_MAX_BYTES||!IsHex(hex))throw std::runtime_error("bad proof length");
         const auto raw=ParseHex(hex);DataStream proof_header{raw};uint8_t version;CBlockHeader header;
-        proof_header>>version>>header;if(version!=3)throw std::runtime_error("bad certificate version");
+        proof_header>>version>>header;if(version!=4)throw std::runtime_error("bad certificate version");
         const auto id=header.GetHash();
         // Lost ACK retries acknowledge the exact currently retained proof, without new credit.
         if(anchor!=call("getbestblockhash").get_str())throw std::runtime_error("parent changed");
@@ -219,19 +199,15 @@ struct Endpoint {
         if(params[0].get_str()!=c.user)throw std::runtime_error("wrong worker");
         auto it=std::find_if(c.jobs.begin(),c.jobs.end(),[&](const Job& j){return j.id==params[1].get_str();});
         if(it==c.jobs.end())throw std::runtime_error("unknown job");
-        const auto extra=params[2].get_str();if(extra.size()!=(blake?16:8)||!IsHex(extra))throw std::runtime_error("bad extranonce2");
+        const auto extra=params[2].get_str();if(extra.size()!=16||!IsHex(extra))throw std::runtime_error("bad extranonce2");
         CBlock block=it->block;
         if(block.hashPrevBlock.GetHex()!=call("getbestblockhash").get_str())throw std::runtime_error("stale parent");
-        if(blake) {
+        {
             const auto nonce=sia_words(params[4]),time=sia_words(params[3]);
             block.nNonce=nonce.first;block.m_nonce2=nonce.second;
             block.m_time_offset=time.first;block.m_nonce3=time.second;
             const auto en=ParseHex("00000000"+c.extra+extra);
             std::copy(en.begin(),en.end(),block.m_extranonce.begin());
-        } else {
-            if(number(params[3])!=block.nTime)throw std::runtime_error("time rolling unsupported in fixture");
-            block.nNonce=number(params[4]);CMutableTransaction cb{*block.vtx[0]};const auto nonce=ParseHex(c.extra+extra);
-            std::copy(nonce.begin(),nonce.end(),cb.vin[0].scriptSig.end()-8);block.vtx[0]=MakeTransactionRef(std::move(cb));block.hashMerkleRoot=BlockMerkleRoot(block);
         }
         const auto id=block.GetHash();
         arith_uint256 target;target.SetCompact(block.nBits);const auto value=UintToArith256(id);
@@ -255,7 +231,7 @@ struct Endpoint {
             if(method=="mining.subscribe"){
                 if(c.subscribed){throw std::runtime_error("already subscribed");}
                 c.subscribed=true;
-                UniValue result(UniValue::VARR),subs(UniValue::VARR),sub(UniValue::VARR);sub.push_back("mining.notify");sub.push_back(c.extra);subs.push_back(sub);result.push_back(subs);result.push_back(c.extra);result.push_back(blake?8:4);reply(c,id,result);
+                UniValue result(UniValue::VARR),subs(UniValue::VARR),sub(UniValue::VARR);sub.push_back("mining.notify");sub.push_back(c.extra);subs.push_back(sub);result.push_back(subs);result.push_back(c.extra);result.push_back(8);reply(c,id,result);
                 UniValue msg(UniValue::VOBJ),diff(UniValue::VARR);diff.push_back(0.0000000002328270909401909);msg.pushKV("id",NullUniValue);msg.pushKV("method","mining.set_difficulty");msg.pushKV("params",diff);queue(c,msg);
                 if(c.authorized){notify(c,true);}
                 return false;
@@ -327,7 +303,7 @@ RPCHelpMan startminingendpoint(){return RPCHelpMan{"startminingendpoint","Start 
         auto& chainman=EnsureChainman(EnsureAnyNodeContext(request.context));if(chainman.GetParams().GetChainType()!=ChainType::REGTEST)throw JSONRPCError(RPC_INVALID_PARAMETER,"regtest only");
         std::lock_guard lock(control);if(endpoint)throw JSONRPCError(RPC_INVALID_PARAMETER,"already running");
         auto e=std::make_unique<Endpoint>();e->context=request.context;e->transactions=request.params[0];e->x=request.params[1].get_str();
-        e->blake=e->makejob().block.m_header_v2; // Validate before opening the listener.
+        e->makejob(); // Validate before opening the listener.
         e->listener=socket(AF_INET,SOCK_STREAM,0);if(e->listener<0)throw JSONRPCError(RPC_MISC_ERROR,"socket failed");
         sockaddr_in addr{};addr.sin_family=AF_INET;addr.sin_addr.s_addr=htonl(INADDR_LOOPBACK);addr.sin_port=0;
         if(bind(e->listener,reinterpret_cast<sockaddr*>(&addr),sizeof(addr))||listen(e->listener,4))throw JSONRPCError(RPC_MISC_ERROR,"bind failed");

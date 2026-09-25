@@ -213,7 +213,7 @@ std::shared_ptr<CBlockTemplate> BlockAssembler::CreateNewBlock()
     coinbaseTx.vout.resize(1);
     coinbaseTx.vout[0].scriptPubKey = m_options.coinbase_output_script;
     coinbaseTx.vout[0].nValue = nFees + GetBlockSubsidy(nHeight, chainparams.GetConsensus());
-    if (nHeight >= chainparams.GetConsensus().GatewayAllocationHeight) {
+    if (chainparams.GetConsensus().MiningContributionsActiveAt(nHeight)) {
         const auto keys{util::SplitString(m_node.args->GetArg("-testgatewaykeys", ""), ':')};
         if (keys.size() != 2 || keys[0].size() != 66 || keys[1].size() != 66 || !IsHex(keys[0]) || !IsHex(keys[1])) {
             throw std::runtime_error("Gateway allocation template requires -testgatewaykeys=<compressed_gateway_pubkey>:<compressed_hasher_pubkey>");

@@ -1,5 +1,9 @@
 # Review of the mechanism and its objective
 
+Historical v3 review. The smaller proof is now implemented in v4; see
+[DESIGN_CHOICES.md](DESIGN_CHOICES.md) and [SPECIFICATION.md](SPECIFICATION.md).
+The findings and evidence below refer to the earlier format.
+
 25 September 2026. This review evaluates proposal commit
 `93e1f3cf27297925637073c65aea49a5e3b2a97d`. The new experiments do not change
 the consensus rules or select new parameters.

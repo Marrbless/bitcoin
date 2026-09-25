@@ -1,0 +1,10 @@
+{
+  "duration_seconds": 120.066,
+  "connections": 7552,
+  "accepted_blocks": 472,
+  "initial_rss_bytes": 52248576,
+  "peak_rss_bytes": 53706752,
+  "max_block_response_ms": 301.734,
+  "seed": 8675309,
+  "scope": "Loopback fixture; not an Internet capacity or denial of service guarantee"
+}

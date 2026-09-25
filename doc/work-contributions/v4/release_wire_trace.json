@@ -1,0 +1,88 @@
+[
+  {
+    "send": {
+      "id": 1,
+      "method": "mining.subscribe",
+      "params": []
+    }
+  },
+  {
+    "receive": {
+      "id": 1,
+      "result": [
+        [
+          [
+            "mining.notify",
+            "00000002"
+          ]
+        ],
+        "00000002",
+        8
+      ],
+      "error": null
+    }
+  },
+  {
+    "send": {
+      "id": 2,
+      "method": "mining.authorize",
+      "params": [
+        "fixture.worker",
+        ""
+      ]
+    }
+  },
+  {
+    "receive": {
+      "id": null,
+      "method": "mining.set_difficulty",
+      "params": [
+        2.328270909401909e-10
+      ]
+    }
+  },
+  {
+    "receive": {
+      "id": 2,
+      "result": true,
+      "error": null
+    }
+  },
+  {
+    "receive": {
+      "id": null,
+      "method": "mining.notify",
+      "params": [
+        "6",
+        "000000000000447eb9e47b89032992253a511f692d23cedb2f1e2af4b73d8951",
+        "0000007b0a2f6ce1665ffd53b36f00c1521b4f3f42adaf12a688cf3ee72a7d820cd83000000000",
+        "",
+        [],
+        "20000000",
+        "207fffff",
+        "000000004bd04a4d",
+        true
+      ]
+    }
+  },
+  {
+    "send": {
+      "id": 3,
+      "method": "mining.submit",
+      "params": [
+        "fixture.worker",
+        "6",
+        "3075000000000000",
+        "4175000078563412",
+        "0000000021436587"
+      ]
+    }
+  },
+  {
+    "receive": {
+      "id": 3,
+      "result": true,
+      "error": null
+    }
+  }
+]

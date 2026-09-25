@@ -25,10 +25,6 @@ public:
     void Finalize(unsigned char hash[OUTPUT_SIZE]);
     CSHA256& Reset();
 
-    // Experimental aligned-state interface. Import authenticates no omitted bytes.
-    bool GetMidstateAligned(unsigned char state[OUTPUT_SIZE]) const;
-    bool SetMidstateAligned(const unsigned char state[OUTPUT_SIZE], uint64_t prefix_bytes);
-
     uint64_t BytesWritten() const
     {
         return bytes;

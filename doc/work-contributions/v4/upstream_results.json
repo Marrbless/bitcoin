@@ -1,0 +1,12 @@
+[
+  {
+    "suite": "feature_powchange.py",
+    "returncode": 0,
+    "passed": true
+  },
+  {
+    "suite": "mining_basic.py",
+    "returncode": 0,
+    "passed": true
+  }
+]
